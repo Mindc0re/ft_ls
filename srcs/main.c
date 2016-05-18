@@ -6,7 +6,7 @@
 /*   By: sgaudin <sgaudin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/05/18 10:39:46 by sgaudin           #+#    #+#             */
-/*   Updated: 2016/05/18 10:42:22 by sgaudin          ###   ########.fr       */
+/*   Updated: 2016/05/18 12:31:47 by sgaudin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,5 +19,6 @@ int			main(int ac, char **av)
 	all = (t_all *)malloc(sizeof(t_all));
 	all->ac = ac;
 	parser(av, all);
+	free(all);
 	exit(EXIT_SUCCESS);
 }
