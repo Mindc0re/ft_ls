@@ -6,7 +6,7 @@
 /*   By: sgaudin <sgaudin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/05/18 10:37:52 by sgaudin           #+#    #+#             */
-/*   Updated: 2016/05/23 10:27:54 by sgaudin          ###   ########.fr       */
+/*   Updated: 2016/05/23 10:54:04 by sgaudin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,16 +38,15 @@ void			parser_ls(char **av, t_all *all)
 {
 	FT_INIT(int, i, 1);
 	if (all->ac == 1)
-		ft_printf("Lecture du repertoire courant\n");
+		create_node_lst(all, "./");
 	else
 	{
-		ft_printf("Parsing des arguments\n");
 		while (i < all->ac)
 		{
 			if (av[i][0] == '-')
 				parse_flag(av[i], all);
 			else
-				ft_printf("File or directory : %s\n", av[i]);
+				create_node_lst(all, av[i]);
 			i++;
 		}
 	}

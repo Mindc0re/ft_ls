@@ -6,11 +6,20 @@
 /*   By: sgaudin <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/05/23 09:26:44 by sgaudin           #+#    #+#             */
-/*   Updated: 2016/05/23 10:24:12 by sgaudin          ###   ########.fr       */
+/*   Updated: 2016/05/23 10:52:12 by sgaudin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/ft_ls.h"
+
+void		backlist(t_all *all)
+{
+	if (all->dir)
+	{
+		while (all->dir->prev)
+			all->dir = all->dir->prev;
+	}
+}
 
 t_dir		*init_list(void)
 {

@@ -6,11 +6,26 @@
 /*   By: sgaudin <sgaudin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/05/18 10:39:46 by sgaudin           #+#    #+#             */
-/*   Updated: 2016/05/23 10:25:34 by sgaudin          ###   ########.fr       */
+/*   Updated: 2016/05/23 10:52:58 by sgaudin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/ft_ls.h"
+
+static void	tmp_print_list(t_all *all)
+{
+	t_dir *tmp;
+
+	tmp = all->dir;
+	while (tmp->prev)
+		tmp = tmp->prev;
+	while (tmp)
+	{
+		ft_printf("%s\n", tmp->name);
+		tmp = tmp->next;
+	}
+	free(tmp);
+}
 
 static void	init_all(t_all *all)
 {
@@ -30,6 +45,8 @@ int			main(int ac, char **av)
 	all->ac = ac;
 	init_all(all);
 	parser_ls(av, all);
+	tmp_print_list(all);
+	backlist(all);
 	free_list(all);
 	free(all);
 	exit(EXIT_SUCCESS);
