@@ -6,7 +6,7 @@
 /*   By: sgaudin <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/05/17 11:09:05 by sgaudin           #+#    #+#             */
-/*   Updated: 2016/05/23 11:19:20 by sgaudin          ###   ########.fr       */
+/*   Updated: 2016/05/23 12:43:49 by sgaudin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,10 +63,14 @@ typedef struct		s_all
 	int				flag_t;
 	int				flag_a;
 	int				flag_l;
+	int				flag_f;
+	int				max_length;
 	t_dir			*dir;
 }					t_all;
 
 void				parser_ls(char **av, t_all *all);
+
+void				get_max_length(t_all *all);
 
 t_dir				*init_list(void);
 void				backlist(t_all *all);
@@ -75,5 +79,7 @@ void				create_node_lst(t_all *all, char *str);
 t_files				*init_files(void);
 
 void				free_list(t_all *all);
+
+void				flag_f(t_all *all);
 
 #endif
