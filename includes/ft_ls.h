@@ -6,7 +6,7 @@
 /*   By: sgaudin <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/05/17 11:09:05 by sgaudin           #+#    #+#             */
-/*   Updated: 2016/05/18 12:43:49 by sgaudin          ###   ########.fr       */
+/*   Updated: 2016/05/23 10:09:59 by sgaudin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,9 +23,17 @@
 
 # include "../libft/includes/libft.h"
 
+# ifndef FT_INIT
 # define FT_INIT(t, n, v)			t n = v
+# endif
+
+# ifndef FT_TER
 # define FT_TER(si, alors, sinon)	si ? alors : sinon
+# endif
+
+# ifndef FT_MULTI3
 # define FT_MULTI3(a, b, c)			a = b = c
+# endif
 
 typedef struct		s_files
 {
@@ -43,7 +51,8 @@ typedef struct		s_files
 typedef struct		s_dir
 {
 	char			*name;
-	t_files			files;
+	t_files			*files;
+	struct s_dir	*prev;
 	struct s_dir	*next;
 }					t_dir;
 
@@ -58,6 +67,13 @@ typedef struct		s_all
 	t_dir			*dir;
 }					t_all;
 
-void				parser(char **av, t_all *all);
+void				parser_ls(char **av, t_all *all);
+
+t_dir				*init_list(void);
+void				create_node_lst(t_all *all, char *str);
+
+t_files				*init_files(void);
+
+void				free_list(t_all *all);
 
 #endif

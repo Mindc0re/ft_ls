@@ -6,7 +6,7 @@
 /*   By: sgaudin <sgaudin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/05/18 10:37:52 by sgaudin           #+#    #+#             */
-/*   Updated: 2016/05/18 11:18:36 by sgaudin          ###   ########.fr       */
+/*   Updated: 2016/05/23 10:27:54 by sgaudin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,28 +24,30 @@ static void		parse_flag(char *str, t_all *all)
 		all->flag_l = (str[i] == 'l') ? 1 : all->flag_l;
 		if (!ft_strchr("Rratl", str[i]))
 		{
-			printf("ft_ls : %c ~~~ Invalid option\n", str[i]);
-			printf("Avalaible options : [atlRr]\n");
+			ft_printf("ft_ls : illegal option -- %c\n", str[i]);
+			ft_printf("Avalaible options : [atlRr]\n");
+			free_list(all);
+			free(all);
 			exit(EXIT_SUCCESS);
 		}
 		i++;
 	}
 }
 
-void			parser(char **av, t_all *all)
+void			parser_ls(char **av, t_all *all)
 {
 	FT_INIT(int, i, 1);
 	if (all->ac == 1)
-		printf("Lecture du repertoire courant\n");
+		ft_printf("Lecture du repertoire courant\n");
 	else
 	{
-		printf("Parsing des arguments\n");
+		ft_printf("Parsing des arguments\n");
 		while (i < all->ac)
 		{
 			if (av[i][0] == '-')
 				parse_flag(av[i], all);
 			else
-				printf("File or directory : %s\n", av[i]);
+				ft_printf("File or directory : %s\n", av[i]);
 			i++;
 		}
 	}
