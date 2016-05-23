@@ -6,18 +6,29 @@
 /*   By: sgaudin <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/05/23 09:26:44 by sgaudin           #+#    #+#             */
-/*   Updated: 2016/05/23 12:37:22 by sgaudin          ###   ########.fr       */
+/*   Updated: 2016/05/23 13:35:31 by sgaudin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/ft_ls.h"
 
-void		backlist(t_all *all)
+void		backlist(t_all *all, int which)
 {
-	if (all->dir)
+	if (which == A_DIR)
 	{
-		while (all->dir->prev)
-			all->dir = all->dir->prev;
+		if (all->dir)
+		{
+			while (all->dir->prev)
+				all->dir = all->dir->prev;
+		}
+	}
+	else if (which == A_FILE)
+	{
+		if (all->dir->files)
+		{
+			while (all->dir->files->prev)
+				all->dir->files = all->dir->files->prev;
+		}
 	}
 }
 
@@ -46,6 +57,7 @@ t_files		*init_files(void)
 	files->size = -1;
 	files->timestamp = -1;
 	files->name = NULL;
+	files->prev = NULL;
 	files->next = NULL;
 	return (files);
 }
@@ -61,9 +73,25 @@ void		create_node_lst(t_all *all, char *str)
 	{
 		new = init_list();
 		new->name = str;
-		new->next = NULL;
 		new->prev = all->dir;
 		all->dir->next = new;
 		all->dir = all->dir->next;
+	}
+}
+
+void		create_node_file(t_all *all, char *str)
+{
+	static int	check = 0;
+	t_files		*new;
+
+	if (!check++)
+		all->dir->files->name = str;
+	else
+	{
+		new = init_files();
+		new->name = str;
+		new->prev = all->dir->files;
+		all->dir->files->next = new;
+		all->dir->files = all->dir->files->next;
 	}
 }

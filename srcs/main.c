@@ -6,7 +6,7 @@
 /*   By: sgaudin <sgaudin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/05/18 10:39:46 by sgaudin           #+#    #+#             */
-/*   Updated: 2016/05/23 12:23:38 by sgaudin          ###   ########.fr       */
+/*   Updated: 2016/05/23 13:36:38 by sgaudin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,7 @@ int			main(int ac, char **av)
 	init_all(all);
 	parser_ls(av, all);
 //	tmp_print_list(all);
-	backlist(all);
+	backlist(all, A_DIR);
 	free_list(all);
 	free(all);
 	exit(EXIT_SUCCESS);

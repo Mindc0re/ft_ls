@@ -6,7 +6,7 @@
 /*   By: sgaudin <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/05/23 09:51:36 by sgaudin           #+#    #+#             */
-/*   Updated: 2016/05/23 11:28:11 by sgaudin          ###   ########.fr       */
+/*   Updated: 2016/05/23 13:36:01 by sgaudin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ void		free_list(t_all *all)
 	FT_INIT(t_files *, tmp_files, init_files());
 	if (all->dir)
 	{
-		backlist(all);
+		backlist(all, A_DIR);
 		while (all->dir)
 		{
 			if (all->dir->files)

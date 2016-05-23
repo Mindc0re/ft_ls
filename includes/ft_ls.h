@@ -6,7 +6,7 @@
 /*   By: sgaudin <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/05/17 11:09:05 by sgaudin           #+#    #+#             */
-/*   Updated: 2016/05/23 12:43:49 by sgaudin          ###   ########.fr       */
+/*   Updated: 2016/05/23 13:45:43 by sgaudin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,6 +45,7 @@ typedef struct		s_files
 	int				timestamp;
 	char			*name;
 	struct s_files	*next;
+	struct s_files	*prev;
 }					t_files;
 
 typedef struct		s_dir
@@ -68,12 +69,17 @@ typedef struct		s_all
 	t_dir			*dir;
 }					t_all;
 
+enum {
+	A_DIR,
+	A_FILE
+}					which;
+
 void				parser_ls(char **av, t_all *all);
 
 void				get_max_length(t_all *all);
 
 t_dir				*init_list(void);
-void				backlist(t_all *all);
+void				backlist(t_all *all, int which);
 void				create_node_lst(t_all *all, char *str);
 
 t_files				*init_files(void);
