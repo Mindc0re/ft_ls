@@ -6,7 +6,7 @@
 /*   By: sgaudin <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/05/17 11:09:05 by sgaudin           #+#    #+#             */
-/*   Updated: 2016/05/23 10:53:22 by sgaudin          ###   ########.fr       */
+/*   Updated: 2016/05/23 11:19:20 by sgaudin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,6 @@
 
 # include <dirent.h>
 # include <sys/stat.h>
-//# include <uuid/uuid.h>
 # include <sys/xattr.h>
 # include <time.h>
 # include <stdlib.h>
@@ -24,15 +23,15 @@
 # include "../libft/includes/libft.h"
 
 # ifndef FT_INIT
-# define FT_INIT(t, n, v)			t n = v
+#  define FT_INIT(t, n, v)			t n = v
 # endif
 
 # ifndef FT_TER
-# define FT_TER(si, alors, sinon)	si ? alors : sinon
+#  define FT_TER(si, alors, sinon)	si ? alors : sinon
 # endif
 
 # ifndef FT_MULTI3
-# define FT_MULTI3(a, b, c)			a = b = c
+#  define FT_MULTI3(a, b, c)			a = b = c
 # endif
 
 typedef struct		s_files
@@ -43,7 +42,7 @@ typedef struct		s_files
 	char			*own_name;
 	char			*own_grp;
 	int				size;
-	int				timestamp; //A MODIF
+	int				timestamp;
 	char			*name;
 	struct s_files	*next;
 }					t_files;
@@ -59,7 +58,7 @@ typedef struct		s_dir
 typedef struct		s_all
 {
 	int				ac;
-	int				flag_R;
+	int				flag_r_big;
 	int				flag_r;
 	int				flag_t;
 	int				flag_a;
