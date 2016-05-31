@@ -6,7 +6,7 @@
 /*   By: sgaudin <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/05/23 09:51:36 by sgaudin           #+#    #+#             */
-/*   Updated: 2016/05/23 13:36:01 by sgaudin          ###   ########.fr       */
+/*   Updated: 2016/05/31 09:13:32 by sgaudin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,23 +16,23 @@ void		free_list(t_all *all)
 {
 	FT_INIT(t_dir *, tmp_lst, init_list());
 	FT_INIT(t_files *, tmp_files, init_files());
-	if (all->dir)
+	if (all->args)
 	{
 		backlist(all, A_DIR);
-		while (all->dir)
+		while (all->args)
 		{
-			if (all->dir->files)
+			if (all->args->files)
 			{
-				while (all->dir->files)
+				while (all->args->files)
 				{
-					tmp_files = all->dir->files->next;
-					free(all->dir->files);
-					all->dir->files = tmp_files;
+					tmp_files = all->args->files->next;
+					free(all->args->files);
+					all->args->files = tmp_files;
 				}
 			}
-			tmp_lst = all->dir->next;
-			free(all->dir);
-			all->dir = tmp_lst;
+			tmp_lst = all->args->next;
+			free(all->args);
+			all->args = tmp_lst;
 		}
 		free(tmp_lst);
 		free(tmp_files);

@@ -6,7 +6,7 @@
 /*   By: sgaudin <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/05/23 10:58:04 by sgaudin           #+#    #+#             */
-/*   Updated: 2016/05/23 11:14:43 by sgaudin          ###   ########.fr       */
+/*   Updated: 2016/05/24 11:10:38 by sgaudin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,10 +14,17 @@
 
 void		test_opendir(char *str)
 {
-	DIR *dir;
+	DIR				*dir;
+	struct stat		file;
 
 	if (!(dir = opendir(str)))
-		perror("tamer");
+	{
+		stat(str, &file);
+		if (S_ISREG(file.st_mode))
+			printf("YAS\n");
+		else
+			perror("tamer");
+	}
 	else
 		closedir(dir);
 }

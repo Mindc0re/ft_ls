@@ -1,28 +1,15 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   flag_f.c                                           :+:      :+:    :+:   */
+/*   flag_R.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: sgaudin <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2016/05/23 11:57:39 by sgaudin           #+#    #+#             */
-/*   Updated: 2016/05/23 12:00:57 by sgaudin          ###   ########.fr       */
+/*   Created: 2016/05/31 09:27:07 by sgaudin           #+#    #+#             */
+/*   Updated: 2016/05/31 09:28:39 by sgaudin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/ft_ls.h"
 
-void		flag_f(t_all *all)
-{
-	DIR				*dir;
-	struct dirent	*file;
-
-	if (!(dir = opendir(all->dir)))
-	{
-		exit(ERROR);
-		perror("ft_ls");
-	}
-	while ((file = readdir(dir)) != NULL)
-		ft_printf("%.15s", file->d_name);
-	closedir(dir);
-}
+void

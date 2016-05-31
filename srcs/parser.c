@@ -6,7 +6,7 @@
 /*   By: sgaudin <sgaudin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/05/18 10:37:52 by sgaudin           #+#    #+#             */
-/*   Updated: 2016/05/23 12:43:27 by sgaudin          ###   ########.fr       */
+/*   Updated: 2016/05/31 09:23:12 by sgaudin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,7 @@ void			choice_flag(t_all *all)
 		flag_f(all);
 }
 
-void			parser_ls(char **av, t_all *all)
+void			parser_args(char **av, t_all *all)
 {
 	int check = 0;
 
@@ -52,13 +52,13 @@ void			parser_ls(char **av, t_all *all)
 			parse_flag(av[i], all);
 		else
 		{
-			create_node_lst(all, av[i]);
+			create_args(all, av[i]);
 			check++;
 		}
 		i++;
 	}
 	if (check == 0)
-		create_node_lst(all, "./");
-	get_max_length(all);
+		create_args(all, "./");
+//	get_max_length(all);
 	choice_flag(all);
 }

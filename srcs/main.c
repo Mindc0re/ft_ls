@@ -6,7 +6,7 @@
 /*   By: sgaudin <sgaudin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/05/18 10:39:46 by sgaudin           #+#    #+#             */
-/*   Updated: 2016/05/23 13:36:38 by sgaudin          ###   ########.fr       */
+/*   Updated: 2016/05/31 09:23:30 by sgaudin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ static void	tmp_print_list(t_all *all)
 {
 	t_dir *tmp;
 
-	tmp = all->dir;
+	tmp = all->args;
 	while (tmp->prev)
 		tmp = tmp->prev;
 	while (tmp)
@@ -37,7 +37,8 @@ static void	init_all(t_all *all)
 	all->flag_l = 0;
 	all->flag_f = 0;
 	all->max_length = 0;
-	all->dir = init_list();
+	all->args = init_list();
+	all->args->files = init_files();
 }
 
 int			main(int ac, char **av)
@@ -47,7 +48,7 @@ int			main(int ac, char **av)
 	all = (t_all *)malloc(sizeof(t_all));
 	all->ac = ac;
 	init_all(all);
-	parser_ls(av, all);
+	parser_args(av, all);
 //	tmp_print_list(all);
 	backlist(all, A_DIR);
 	free_list(all);

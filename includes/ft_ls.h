@@ -6,7 +6,7 @@
 /*   By: sgaudin <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/05/17 11:09:05 by sgaudin           #+#    #+#             */
-/*   Updated: 2016/05/23 13:45:43 by sgaudin          ###   ########.fr       */
+/*   Updated: 2016/05/31 09:23:19 by sgaudin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@
 # endif
 
 # ifndef FT_MULTI3
-#  define FT_MULTI3(a, b, c)			a = b = c
+#  define FT_MULTI3(a, b, c)		a = b = c
 # endif
 
 typedef struct		s_files
@@ -66,7 +66,7 @@ typedef struct		s_all
 	int				flag_l;
 	int				flag_f;
 	int				max_length;
-	t_dir			*dir;
+	t_dir			*args;
 }					t_all;
 
 enum {
@@ -74,13 +74,14 @@ enum {
 	A_FILE
 }					which;
 
-void				parser_ls(char **av, t_all *all);
+void				parser_args(char **av, t_all *all);
 
 void				get_max_length(t_all *all);
 
 t_dir				*init_list(void);
 void				backlist(t_all *all, int which);
-void				create_node_lst(t_all *all, char *str);
+int					create_args(t_all *all, char *str);
+void				create_node_file(t_all *all, char *str);
 
 t_files				*init_files(void);
 

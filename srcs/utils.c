@@ -6,7 +6,7 @@
 /*   By: sgaudin <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/05/23 12:39:34 by sgaudin           #+#    #+#             */
-/*   Updated: 2016/05/23 13:39:53 by sgaudin          ###   ########.fr       */
+/*   Updated: 2016/05/31 09:14:25 by sgaudin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ void			get_max_length(t_all *all)
 	DIR				*dir;
 	struct dirent	*file;
 
-	if (!(dir = opendir(all->dir->name)))
+	if (!(dir = opendir(all->args->name)))
 	{
 		perror("ft_ls");
 		exit(EXIT_FAILURE);
