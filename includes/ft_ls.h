@@ -6,7 +6,7 @@
 /*   By: sgaudin <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/05/17 11:09:05 by sgaudin           #+#    #+#             */
-/*   Updated: 2016/05/31 09:23:19 by sgaudin          ###   ########.fr       */
+/*   Updated: 2016/05/31 11:13:50 by sgaudin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,7 +70,7 @@ typedef struct		s_all
 }					t_all;
 
 enum {
-	A_DIR,
+	A_ARGS,
 	A_FILE
 }					which;
 

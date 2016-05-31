@@ -6,27 +6,22 @@
 /*   By: sgaudin <sgaudin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/05/18 10:39:46 by sgaudin           #+#    #+#             */
-/*   Updated: 2016/05/31 09:23:30 by sgaudin          ###   ########.fr       */
+/*   Updated: 2016/05/31 11:33:03 by sgaudin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/ft_ls.h"
-/*
+
 static void	tmp_print_list(t_all *all)
 {
-	t_dir *tmp;
-
-	tmp = all->args;
-	while (tmp->prev)
-		tmp = tmp->prev;
-	while (tmp)
+	backlist(all, A_ARGS);
+	while (all->args)
 	{
-		ft_printf("%s\n", tmp->name);
-		tmp = tmp->next;
+		ft_printf("%s\n", all->args->name);
+		all->args = all->args->next;
 	}
-	free(tmp);
 }
-*/
+
 
 static void	init_all(t_all *all)
 {
@@ -49,8 +44,8 @@ int			main(int ac, char **av)
 	all->ac = ac;
 	init_all(all);
 	parser_args(av, all);
-//	tmp_print_list(all);
-	backlist(all, A_DIR);
+	tmp_print_list(all);
+	backlist(all, A_ARGS);
 	free_list(all);
 	free(all);
 	exit(EXIT_SUCCESS);

@@ -6,7 +6,7 @@
 /*   By: sgaudin <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/05/23 09:26:44 by sgaudin           #+#    #+#             */
-/*   Updated: 2016/05/31 09:26:34 by sgaudin          ###   ########.fr       */
+/*   Updated: 2016/05/31 11:19:08 by sgaudin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 void		backlist(t_all *all, int which)
 {
-	if (which == A_DIR)
+	if (which == A_ARGS)
 	{
 		if (all->args)
 		{
@@ -65,15 +65,8 @@ t_files		*init_files(void)
 int			create_args(t_all *all, char *str)
 {
 	static int	check = 0;
-	struct stat	file;
 	t_dir		*new;
 
-	stat(str, &file);
-	if (!S_ISDIR(file.st_mode))
-	{
-		create_node_file(all, str);
-		return (0);
-	}
 	if (!check++)
 		all->args->name = str;
 	else

@@ -6,10 +6,13 @@
 /*   By: sgaudin <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/05/31 09:27:07 by sgaudin           #+#    #+#             */
-/*   Updated: 2016/05/31 09:28:39 by sgaudin          ###   ########.fr       */
+/*   Updated: 2016/05/31 11:12:57 by sgaudin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/ft_ls.h"
 
-void
+void		flag_R(t_all *all)
+{
+	backlist(all, A_ARGS);
+}
