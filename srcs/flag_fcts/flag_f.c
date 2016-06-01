@@ -6,7 +6,7 @@
 /*   By: sgaudin <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/05/23 11:57:39 by sgaudin           #+#    #+#             */
-/*   Updated: 2016/05/31 11:32:37 by sgaudin          ###   ########.fr       */
+/*   Updated: 2016/05/31 15:42:56 by sgaudin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,15 +18,17 @@ void		flag_f(t_all *all)
 	struct dirent	*file;
 	int				i;
 
-	backlist(all, A_ARGS);
+	backlist(all, W_ARGS);
 	while (all->args)
 	{
 		if (!(dir = opendir(all->args->name)))
 		{
+			ft_printf("%s: ", all->args->name);
 			perror("ft_ls");
 			exit(EXIT_FAILURE);
 		}
-		ft_printf("%s:\n", all->args->name);
+		if (ft_strcmp("./", all->args->name))
+			ft_printf("%s:\n", all->args->name);
 		while ((file = readdir(dir)) != NULL)
 		{
 			i = 0;
@@ -44,3 +46,5 @@ void		flag_f(t_all *all)
 	}
 	closedir(dir);
 }
+
+

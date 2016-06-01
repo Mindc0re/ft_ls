@@ -6,7 +6,7 @@
 /*   By: sgaudin <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/05/23 09:26:44 by sgaudin           #+#    #+#             */
-/*   Updated: 2016/05/31 11:19:08 by sgaudin          ###   ########.fr       */
+/*   Updated: 2016/06/01 09:30:55 by sgaudin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 void		backlist(t_all *all, int which)
 {
-	if (which == A_ARGS)
+	if (which == W_ARGS)
 	{
 		if (all->args)
 		{
@@ -22,12 +22,12 @@ void		backlist(t_all *all, int which)
 				all->args = all->args->prev;
 		}
 	}
-	else if (which == A_FILE)
+	else if (which == W_FILE)
 	{
-		if (all->args->files)
+		if (all->list)
 		{
-			while (all->args->files->prev)
-				all->args->files = all->args->files->prev;
+			while (all->list->prev)
+				all->list = all->list->prev;
 		}
 	}
 }
@@ -44,7 +44,7 @@ t_dir		*init_list(void)
 	return (dir);
 }
 
-t_files		*init_files(void)
+t_files		*init_file(void)
 {
 	t_files	*files;
 
@@ -80,19 +80,27 @@ int			create_args(t_all *all, char *str)
 	return (0);
 }
 
-void		create_node_file(t_all *all, char *str)
+void		create_list(t_all *all, char *str)
 {
-	static int	check = 0;
-	t_files		*new;
+	static int		check = 0;
+	t_files			*new;
+	struct stat		file;
 
-	if (!check++)
-		all->args->files->name = str;
+	if (!check)
+	{
+		all->list->name = str;
+		stat(str, &file);
+		get_type(all->list, file);
+		check++;
+	}
 	else
 	{
-		new = init_files();
+		new = init_file();
+		stat(str, &file);
+		get_type(new, file);
 		new->name = str;
-		new->prev = all->args->files;
-		all->args->files->next = new;
-		all->args->files = all->args->files->next;
+		new->prev = all->list;
+		all->list->next = new;
+		all->list = all->list->next;
 	}
 }

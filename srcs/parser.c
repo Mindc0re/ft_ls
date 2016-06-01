@@ -6,7 +6,7 @@
 /*   By: sgaudin <sgaudin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/05/18 10:37:52 by sgaudin           #+#    #+#             */
-/*   Updated: 2016/05/31 09:23:12 by sgaudin          ###   ########.fr       */
+/*   Updated: 2016/06/01 11:16:27 by sgaudin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ static void		parse_flag(char *str, t_all *all)
 		{
 			ft_printf("ft_ls : illegal option -- %c\n", str[i]);
 			ft_printf("Avalaible options : [atlRrf]\n");
-			free_list(all);
+			free_args(all);
 			free(all);
 			exit(EXIT_SUCCESS);
 		}
@@ -39,6 +39,11 @@ void			choice_flag(t_all *all)
 {
 	if (all->flag_f)
 		flag_f(all);
+}
+
+void			parser_ls(t_all *all)
+{
+	while (all->args)
 }
 
 void			parser_args(char **av, t_all *all)
@@ -59,6 +64,6 @@ void			parser_args(char **av, t_all *all)
 	}
 	if (check == 0)
 		create_args(all, "./");
-//	get_max_length(all);
+	parser_ls(all);
 	choice_flag(all);
 }

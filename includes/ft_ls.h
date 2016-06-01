@@ -6,7 +6,7 @@
 /*   By: sgaudin <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/05/17 11:09:05 by sgaudin           #+#    #+#             */
-/*   Updated: 2016/05/31 11:13:50 by sgaudin          ###   ########.fr       */
+/*   Updated: 2016/05/31 15:33:28 by sgaudin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,24 +67,37 @@ typedef struct		s_all
 	int				flag_f;
 	int				max_length;
 	t_dir			*args;
+	t_files			*list;
 }					t_all;
 
 enum {
-	A_ARGS,
-	A_FILE
+	W_ARGS,
+	W_FILE
 }					which;
 
-void				parser_args(char **av, t_all *all);
+enum {
+	T_REG,
+	T_DIR,
+	T_CHR,
+	T_BLK,
+	T_FIFO,
+	T_LINK,
+	T_SOCK
+}					types;
 
 void				get_max_length(t_all *all);
 
+t_files				*init_file(void);
 t_dir				*init_list(void);
 void				backlist(t_all *all, int which);
+
 int					create_args(t_all *all, char *str);
-void				create_node_file(t_all *all, char *str);
+void				create_list(t_all *all, char *str);
+void				parser_args(char **av, t_all *all);
 
-t_files				*init_files(void);
+void				get_type(t_files *files, struct stat file);
 
+void				free_args(t_all *all);
 void				free_list(t_all *all);
 
 void				flag_f(t_all *all);
