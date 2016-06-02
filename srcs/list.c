@@ -6,7 +6,7 @@
 /*   By: sgaudin <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/05/23 09:26:44 by sgaudin           #+#    #+#             */
-/*   Updated: 2016/06/01 09:30:55 by sgaudin          ###   ########.fr       */
+/*   Updated: 2016/06/02 09:58:17 by sgaudin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,16 +82,15 @@ int			create_args(t_all *all, char *str)
 
 void		create_list(t_all *all, char *str)
 {
-	static int		check = 0;
 	t_files			*new;
 	struct stat		file;
 
-	if (!check)
+	if (!all->list)
 	{
+		all->list = init_file();
 		all->list->name = str;
 		stat(str, &file);
 		get_type(all->list, file);
-		check++;
 	}
 	else
 	{

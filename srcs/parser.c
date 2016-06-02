@@ -6,7 +6,7 @@
 /*   By: sgaudin <sgaudin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/05/18 10:37:52 by sgaudin           #+#    #+#             */
-/*   Updated: 2016/06/01 11:16:27 by sgaudin          ###   ########.fr       */
+/*   Updated: 2016/06/02 10:07:11 by sgaudin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,26 @@ void			choice_flag(t_all *all)
 
 void			parser_ls(t_all *all)
 {
+	struct stat		stats;
+	DIR				*dir;
+	struct dirent	file;
+	int				ret;
+
 	while (all->args)
+	{
+		free_list(all);
+		if (!(dir = opendir(all->args->name)))
+		{
+			if ((ret = stat(all->args->name, &file)) == -1 || S_ISDIR(file.st_mode))
+			{
+				ft_printf("%s: ", all->args->name);
+				perror("ft_ls");
+			}
+		}
+		else
+			// FAIRE LA BOUCLE DU READDIR QUI VA LIRE TOUT CE DONT ON A BESOIN
+		all->args = all->args->next;
+	}
 }
 
 void			parser_args(char **av, t_all *all)

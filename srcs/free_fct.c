@@ -6,7 +6,7 @@
 /*   By: sgaudin <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/05/23 09:51:36 by sgaudin           #+#    #+#             */
-/*   Updated: 2016/05/31 15:19:52 by sgaudin          ###   ########.fr       */
+/*   Updated: 2016/06/02 09:58:48 by sgaudin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,9 +14,9 @@
 
 void		free_args(t_all *all)
 {
-	FT_INIT(t_dir *, tmp_lst, init_list());
 	if (all->args)
 	{
+		FT_INIT(t_dir *, tmp_lst, init_list());
 		backlist(all, W_ARGS);
 		while (all->args)
 		{
@@ -24,15 +24,15 @@ void		free_args(t_all *all)
 			free(all->args);
 			all->args = tmp_lst;
 		}
+		free(tmp_lst);
 	}
-	free(tmp_lst);
 }
 
 void		free_list(t_all *all)
 {
-	FT_INIT(t_files *, tmp_lst, init_file());
 	if (all->list)
 	{
+		FT_INIT(t_files *, tmp_lst, init_file());
 		backlist(all, W_FILE);
 		while (all->list)
 		{
@@ -40,6 +40,6 @@ void		free_list(t_all *all)
 			free(all->list);
 			all->list = tmp_lst;
 		}
+		free(tmp_lst);
 	}
-	free(tmp_lst);
 }
