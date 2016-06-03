@@ -6,11 +6,33 @@
 /*   By: sgaudin <sgaudin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/05/18 10:37:52 by sgaudin           #+#    #+#             */
-/*   Updated: 2016/06/02 10:07:11 by sgaudin          ###   ########.fr       */
+/*   Updated: 2016/06/03 14:35:39 by sgaudin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/ft_ls.h"
+
+static void		first_parse(t_all *all)
+{
+	struct stat		stats;
+	DIR				*dir;
+	int				ret;
+
+	backlist(all, W_ARGS, NULL);
+	while (all->args)
+	{
+		if (!(dir = opendir(all->args->name)))
+		{
+			if ((ret = stat(all->args->name, &stats)) == 0)
+				create_list(all->args->name, &all->list_bis);
+		}
+		if (all->args->next)
+			all->args = all->args->next;
+		else
+			break ;
+	}
+	print_list(all);
+}
 
 static void		parse_flag(char *str, t_all *all)
 {
@@ -45,23 +67,30 @@ void			parser_ls(t_all *all)
 {
 	struct stat		stats;
 	DIR				*dir;
-	struct dirent	file;
 	int				ret;
 
+	backlist(all, W_ARGS, NULL);
 	while (all->args)
 	{
-		free_list(all);
+		free_list(all, &all->list);
 		if (!(dir = opendir(all->args->name)))
 		{
-			if ((ret = stat(all->args->name, &file)) == -1 || S_ISDIR(file.st_mode))
+			if ((ret = stat(all->args->name, &stats)) == -1 || S_ISDIR(stats.st_mode))
 			{
 				ft_printf("%s: ", all->args->name);
 				perror("ft_ls");
 			}
 		}
 		else
-			// FAIRE LA BOUCLE DU READDIR QUI VA LIRE TOUT CE DONT ON A BESOIN
-		all->args = all->args->next;
+		{
+			closedir(dir);
+			read_dir(all, all->args->name);
+			print_list(all);
+		}
+		if (all->args->next)
+			all->args = all->args->next;
+		else
+			break ;
 	}
 }
 
@@ -76,13 +105,15 @@ void			parser_args(char **av, t_all *all)
 			parse_flag(av[i], all);
 		else
 		{
-			create_args(all, av[i]);
+			create_args(all, av[i], 1);
 			check++;
 		}
 		i++;
 	}
 	if (check == 0)
-		create_args(all, "./");
+		create_args(all, "./", 1);
+	backlist(all, W_ARGS, NULL);
+	first_parse(all);
 	parser_ls(all);
 	choice_flag(all);
 }

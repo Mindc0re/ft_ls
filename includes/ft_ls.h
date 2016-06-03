@@ -6,7 +6,7 @@
 /*   By: sgaudin <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/05/17 11:09:05 by sgaudin           #+#    #+#             */
-/*   Updated: 2016/05/31 15:33:28 by sgaudin          ###   ########.fr       */
+/*   Updated: 2016/06/03 15:54:27 by sgaudin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,6 @@ typedef struct		s_files
 typedef struct		s_dir
 {
 	char			*name;
-	t_files			*files;
 	struct s_dir	*prev;
 	struct s_dir	*next;
 }					t_dir;
@@ -68,15 +67,18 @@ typedef struct		s_all
 	int				max_length;
 	t_dir			*args;
 	t_files			*list;
+	t_files			*list_bis;
 }					t_all;
 
 enum {
 	W_ARGS,
-	W_FILE
+	W_FILE,
+	W_LIST,
+	W_LIST_BIS
 }					which;
 
 enum {
-	T_REG,
+	T_REG = 1,
 	T_DIR,
 	T_CHR,
 	T_BLK,
@@ -89,16 +91,18 @@ void				get_max_length(t_all *all);
 
 t_files				*init_file(void);
 t_dir				*init_list(void);
-void				backlist(t_all *all, int which);
+void				backlist(t_all *all, int which, t_files **list);
 
-int					create_args(t_all *all, char *str);
-void				create_list(t_all *all, char *str);
+int					create_args(t_all *all, char *str, int next);
+void				create_list(char *str, t_files **list);
 void				parser_args(char **av, t_all *all);
+void				read_dir(t_all *all, char *str);
+void				print_list(t_all *all);
 
-void				get_type(t_files *files, struct stat file);
+void				get_type(t_files **files, struct stat *file);
 
 void				free_args(t_all *all);
-void				free_list(t_all *all);
+void				free_list(t_all *all, t_files **list);
 
 void				flag_f(t_all *all);
 
