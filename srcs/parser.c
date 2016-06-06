@@ -6,7 +6,7 @@
 /*   By: sgaudin <sgaudin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/05/18 10:37:52 by sgaudin           #+#    #+#             */
-/*   Updated: 2016/06/03 14:35:39 by sgaudin          ###   ########.fr       */
+/*   Updated: 2016/06/06 12:41:38 by sgaudin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ static void		first_parse(t_all *all)
 		if (!(dir = opendir(all->args->name)))
 		{
 			if ((ret = stat(all->args->name, &stats)) == 0)
-				create_list(all->args->name, &all->list_bis);
+				create_list(all->args->name, &all->list_bis, all);
 		}
 		if (all->args->next)
 			all->args = all->args->next;

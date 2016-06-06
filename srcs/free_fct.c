@@ -6,7 +6,7 @@
 /*   By: sgaudin <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/05/23 09:51:36 by sgaudin           #+#    #+#             */
-/*   Updated: 2016/06/03 14:34:06 by sgaudin          ###   ########.fr       */
+/*   Updated: 2016/06/06 12:34:39 by sgaudin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,12 +33,13 @@ void		free_list(t_all *all, t_files **list)
 {
 	if ((*list))
 	{
-//		ft_printf("In the free fct\n");
 		FT_INIT(t_files *, tmp_lst, init_file());
 		backlist(all, W_FILE, &(*list));
 		while ((*list))
 		{
 			tmp_lst = (*list)->next;
+			if ((*list)->path)
+				free((*list)->path);
 			free((*list));
 			(*list) = tmp_lst;
 		}

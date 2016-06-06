@@ -6,7 +6,7 @@
 /*   By: sgaudin <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/05/23 09:26:44 by sgaudin           #+#    #+#             */
-/*   Updated: 2016/06/03 16:07:01 by sgaudin          ###   ########.fr       */
+/*   Updated: 2016/06/06 13:17:42 by sgaudin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,14 +77,18 @@ int			create_args(t_all *all, char *str, int next)
 		new->name = ft_strnew(ft_strlen(str));
 		new->name = str;
 		new->prev = all->args;
-		all->args->next = new;
-		if (next)
+		if (!next)
+		{
+			new->next = all->args->next;
+			all->args->next = new;
+		}
+		else
 			all->args = all->args->next;
 	}
 	return (0);
 }
 
-void		create_list(char *str, t_files **list)
+void		create_list(char *str, t_files **list, t_all *all)
 {
 	t_files			*new;
 	struct stat		file;
@@ -93,16 +97,19 @@ void		create_list(char *str, t_files **list)
 	{
 		(*list) = init_file();
 		(*list)->name = str;
+		(*list)->path = ft_strjoin(all->args->name, "/");
+		(*list)->path = ft_strjoin((*list)->path, str);
 		stat(str, &file);
-		if ((S_ISDIR(file.st_mode)))
-			ft_printf("GNEH : %s\n", str);
 		get_type(&(*list), &file);
 	}
 	else
 	{
 		new = init_file();
 		new->name = str;
-		stat(str, &file);
+		new->path = ft_strjoin(all->args->name, "/");
+		new->path = ft_strjoin(new->path, str);
+//		ft_printf("%s\n", new->path);
+		stat(new->path, &file);
 		get_type(&new, &file);
 		new->prev = (*list);
 		(*list)->next = new;
