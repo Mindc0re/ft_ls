@@ -6,7 +6,7 @@
 /*   By: sgaudin <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/05/23 09:26:44 by sgaudin           #+#    #+#             */
-/*   Updated: 2016/06/07 11:29:12 by sgaudin          ###   ########.fr       */
+/*   Updated: 2016/06/07 15:12:48 by sgaudin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -102,7 +102,7 @@ void		create_list(char *str, t_files **list, t_all *all)
 		(*list)->name = str;
 		(*list)->path = ft_strjoin(all->args->name, "/");
 		(*list)->path = ft_strjoin((*list)->path, str);
-		stat(str, &file);
+		stat((*list)->path, &file);
 		get_type(&(*list), &file);
 	}
 	else

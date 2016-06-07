@@ -6,7 +6,7 @@
 /*   By: sgaudin <sgaudin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/06/03 09:31:59 by sgaudin           #+#    #+#             */
-/*   Updated: 2016/06/07 12:11:28 by sgaudin          ###   ########.fr       */
+/*   Updated: 2016/06/07 15:46:02 by sgaudin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,10 +32,36 @@ void		print_list(t_all *all)
 			ft_printf("\n%s:\n\n", all->args->name);
 		while (all->list->next)
 		{
-			ft_printf("%s ", all->list->name);
+			if (all->list->name[0] == '.')
+			{
+				if (all->flag_a)
+					ft_printf("%s ", all->list->name);
+			}
+			else
+				ft_printf("%s ", all->list->name);
 			all->list = all->list->next;
 		}
 		ft_printf("%s\n", all->list->name);
+	}
+}
+
+void		flag_r_detect(t_all *all, struct dirent **file)
+{
+	char *tmp_path;
+
+	tmp_path = NULL;
+	if (all->list)
+	{
+		if (all->flag_r_big && !(ft_strcmp(all->list->name, (*file)->d_name)))
+		{
+			if (all->list->type == T_DIR && ft_strcmp(".", (*file)->d_name) && ft_strcmp("..", (*file)->d_name))
+			{
+				tmp_path = ft_strjoin(all->args->name, "/");
+				all->ac++;
+				create_args(all, ft_strjoin(tmp_path, (*file)->d_name), 0);
+				free(tmp_path);
+			}
+		}
 	}
 }
 
@@ -44,25 +70,20 @@ void		read_dir(t_all *all, char *str)
 	DIR				*dir;
 	struct dirent	*file;
 	struct stat		stats;
-	char			*tmp_path;
 
 	dir = opendir(str);
-	tmp_path = NULL;
 	while ((file = readdir(dir)))
 	{
 		stat(file->d_name, &stats);
-		create_list(file->d_name, &all->list, all);
-		if (all->flag_r_big)
+		if (file->d_name[0] == '.')
 		{
-			if (all->list->type == T_DIR && ft_strcmp(".", file->d_name) && ft_strcmp("..", file->d_name))
-			{
-				if (tmp_path)
-					free(tmp_path);
-				tmp_path = ft_strjoin(all->args->name, "/");
-				create_args(all, ft_strjoin(tmp_path, file->d_name), 0);
-			}
+			if (all->flag_a)
+				create_list(file->d_name, &all->list, all);
 		}
+		else
+			create_list(file->d_name, &all->list, all);
+		flag_r_detect(all, &file);
 	}
-	tri_lst(&all->list);
 	closedir(dir);
+	tri_lst(&all->list);
 }
