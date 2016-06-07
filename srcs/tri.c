@@ -6,26 +6,46 @@
 /*   By: sgaudin <sgaudin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/06/06 13:32:01 by sgaudin           #+#    #+#             */
-/*   Updated: 2016/06/06 13:59:32 by sgaudin          ###   ########.fr       */
+/*   Updated: 2016/06/07 12:10:05 by sgaudin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/ft_ls.h"
 
-void		tri_lst(t_list **list)
+void		swap(t_files **list)
 {
-	t_list *tmp;
+	t_files tmp;
 
-	backlist(all, W_LIST, (*list));
+	tmp = *(*list)->next;
+	(*list)->next->prev = (*list)->prev;
+	if ((*list)->next->next)
+		(*list)->next->next->prev = (*list);
+	if ((*list)->prev)
+		(*list)->prev->next = (*list)->next;
+	(*list)->next->next = (*list);
+	(*list)->prev = (*list)->next;
+	(*list)->next = tmp.next;
 }
 
-void		tri_args(t_dir **args)
+void		tri_lst(t_files **list)
 {
-	t_dir *tmp;
-
-	backlist(all, W_ARGS, NULL);
-	while ((*args))
+	FT_INIT(int, check, 0);
+	backlist(NULL, W_FILE, &(*list));
+	while ((*list))
 	{
-		
+		if ((*list)->next)
+		{
+			if (ft_strcmp((*list)->name, (*list)->next->name) > 0)
+			{
+				swap(&(*list));
+				check++;
+			}
+			if ((*list)->next)
+				(*list) = (*list)->next;
+		}
+		else
+			break ;
 	}
+	if (check)
+		tri_lst(list);
 }

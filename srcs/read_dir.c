@@ -6,7 +6,7 @@
 /*   By: sgaudin <sgaudin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/06/03 09:31:59 by sgaudin           #+#    #+#             */
-/*   Updated: 2016/06/06 12:51:54 by sgaudin          ###   ########.fr       */
+/*   Updated: 2016/06/07 12:11:28 by sgaudin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,5 +63,6 @@ void		read_dir(t_all *all, char *str)
 			}
 		}
 	}
+	tri_lst(&all->list);
 	closedir(dir);
 }

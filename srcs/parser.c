@@ -6,7 +6,7 @@
 /*   By: sgaudin <sgaudin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/05/18 10:37:52 by sgaudin           #+#    #+#             */
-/*   Updated: 2016/06/06 12:41:38 by sgaudin          ###   ########.fr       */
+/*   Updated: 2016/06/07 12:11:16 by sgaudin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,7 @@ static void		first_parse(t_all *all)
 		else
 			break ;
 	}
+	tri_lst(&all->list_bis);
 	print_list(all);
 }
 
@@ -55,12 +56,6 @@ static void		parse_flag(char *str, t_all *all)
 		}
 		i++;
 	}
-}
-
-void			choice_flag(t_all *all)
-{
-	if (all->flag_f)
-		flag_f(all);
 }
 
 void			parser_ls(t_all *all)
@@ -115,5 +110,4 @@ void			parser_args(char **av, t_all *all)
 	backlist(all, W_ARGS, NULL);
 	first_parse(all);
 	parser_ls(all);
-	choice_flag(all);
 }

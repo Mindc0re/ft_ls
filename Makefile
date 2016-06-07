@@ -6,7 +6,7 @@
 #    By: sgaudin <sgaudin@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2016/05/18 11:08:40 by sgaudin           #+#    #+#              #
-#    Updated: 2016/06/03 10:48:21 by sgaudin          ###   ########.fr        #
+#    Updated: 2016/06/07 11:12:37 by sgaudin          ###   ########.fr        #
 #                                                                              #
 #******************************************************************************#
 
@@ -17,7 +17,7 @@ CC = gcc -Wall -Wextra #-Werror
 FLAGS = srcs/flag_fcts/
 
 SRC = srcs/parser.c srcs/main.c srcs/list.c srcs/free_fct.c $(FLAGS)flag_f.c \
-	srcs/utils.c srcs/stats.c srcs/read_dir.c
+	srcs/utils.c srcs/stats.c srcs/read_dir.c srcs/tri.c
 
 LFT = ./libft/
 
