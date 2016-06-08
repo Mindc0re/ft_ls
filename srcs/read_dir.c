@@ -6,7 +6,7 @@
 /*   By: sgaudin <sgaudin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/06/03 09:31:59 by sgaudin           #+#    #+#             */
-/*   Updated: 2016/06/07 15:46:02 by sgaudin          ###   ########.fr       */
+/*   Updated: 2016/06/08 09:29:14 by sgaudin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,6 +45,33 @@ void		print_list(t_all *all)
 	}
 }
 
+void		flag_r_detect(t_all *all)
+{
+	char *tmp_path;
+
+	tmp_path = NULL;
+	backlist(all, W_FILE, &all->list);
+	if (all->flag_r_big)
+	{
+		while (all->list)
+		{
+			if (all->list->type == T_DIR && ft_strcmp(".", all->list->name) && ft_strcmp("..", all->list->name))
+			{
+				tmp_path = ft_strjoin(all->args->name, "/");
+				ft_printf("readdir : %s %s\n", all->list->name, tmp_path);
+				all->ac++;
+				create_args(all, ft_strjoin(tmp_path, all->list->name), 0);
+				free(tmp_path);
+			}
+			if (all->list->next)
+				all->list = all->list->next;
+			else
+				break ;
+		}
+	}
+}
+
+/*
 void		flag_r_detect(t_all *all, struct dirent **file)
 {
 	char *tmp_path;
@@ -64,6 +91,7 @@ void		flag_r_detect(t_all *all, struct dirent **file)
 		}
 	}
 }
+*/
 
 void		read_dir(t_all *all, char *str)
 {
@@ -82,8 +110,8 @@ void		read_dir(t_all *all, char *str)
 		}
 		else
 			create_list(file->d_name, &all->list, all);
-		flag_r_detect(all, &file);
 	}
 	closedir(dir);
 	tri_lst(&all->list);
+	flag_r_detect(all);
 }
