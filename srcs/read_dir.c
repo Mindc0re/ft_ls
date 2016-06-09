@@ -6,7 +6,7 @@
 /*   By: sgaudin <sgaudin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/06/03 09:31:59 by sgaudin           #+#    #+#             */
-/*   Updated: 2016/06/08 09:29:14 by sgaudin          ###   ########.fr       */
+/*   Updated: 2016/06/09 09:48:58 by sgaudin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,26 +45,51 @@ void		print_list(t_all *all)
 	}
 }
 
+/*
+void		create_args_spec(t_all *all, char *str)
+{
+	t_dir	*new;
+	static	t_dir **last = NULL;
+
+	new = init_list();
+	new->name = ft_strnew(ft_strlen(str));
+	new->name = str;
+	if (last)
+	{
+		(*last) = (*last)->next;
+		new->prev = (*last);
+		new->next = (*last)->next;
+		(*last)->next = new;
+		(*last) = (*last)->next;
+	}
+	else
+	{
+		new->prev = all->args;
+		new->next = all->args->next;
+		all->args->next = new;
+		last = &all->args;
+	}
+}
+*/
 void		flag_r_detect(t_all *all)
 {
 	char *tmp_path;
 
 	tmp_path = NULL;
-	backlist(all, W_FILE, &all->list);
+//	backlist(all, W_FILE, &all->list);
 	if (all->flag_r_big)
 	{
 		while (all->list)
 		{
 			if (all->list->type == T_DIR && ft_strcmp(".", all->list->name) && ft_strcmp("..", all->list->name))
 			{
-				tmp_path = ft_strjoin(all->args->name, "/");
-				ft_printf("readdir : %s %s\n", all->list->name, tmp_path);
+				tmp_path = ft_strcmp(all->args->name, "./") ? ft_strjoin(all->args->name, "/") : ft_strdup("./");
 				all->ac++;
 				create_args(all, ft_strjoin(tmp_path, all->list->name), 0);
 				free(tmp_path);
 			}
-			if (all->list->next)
-				all->list = all->list->next;
+			if (all->list->prev)
+				all->list = all->list->prev;
 			else
 				break ;
 		}
@@ -92,7 +117,6 @@ void		flag_r_detect(t_all *all, struct dirent **file)
 	}
 }
 */
-
 void		read_dir(t_all *all, char *str)
 {
 	DIR				*dir;
@@ -111,7 +135,7 @@ void		read_dir(t_all *all, char *str)
 		else
 			create_list(file->d_name, &all->list, all);
 	}
-	closedir(dir);
 	tri_lst(&all->list);
 	flag_r_detect(all);
+	closedir(dir);
 }

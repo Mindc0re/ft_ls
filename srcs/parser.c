@@ -6,7 +6,7 @@
 /*   By: sgaudin <sgaudin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/05/18 10:37:52 by sgaudin           #+#    #+#             */
-/*   Updated: 2016/06/08 09:23:04 by sgaudin          ###   ########.fr       */
+/*   Updated: 2016/06/09 09:43:05 by sgaudin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,20 +80,21 @@ void			parser_ls(t_all *all)
 		{
 			closedir(dir);
 			read_dir(all, all->args->name);
-//			print_list(all);
+			print_list(all);
 		}
 		if (all->args->next)
 			all->args = all->args->next;
 		else
 			break ;
 	}
-	backlist(all, W_ARGS, NULL);
+/*	backlist(all, W_ARGS, NULL);
 	ft_printf("TEST LISTE\n");
 	while (all->args)
 	{
 		ft_printf("%s\n", all->args->name);
 		all->args = all->args->next;
 	}
+*/
 }
 
 void			parser_args(char **av, t_all *all)
