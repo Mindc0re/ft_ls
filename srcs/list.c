@@ -6,7 +6,7 @@
 /*   By: sgaudin <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/05/23 09:26:44 by sgaudin           #+#    #+#             */
-/*   Updated: 2016/06/09 09:18:52 by sgaudin          ###   ########.fr       */
+/*   Updated: 2016/06/09 10:50:17 by sgaudin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,8 +49,7 @@ t_files		*init_file(void)
 
 	files = (t_files *)malloc(sizeof(t_files));
 	files->type = -1;
-	files->rights = NULL;
-	files->links = -1;
+	files->links = 0;
 	files->own_name = NULL;
 	files->own_grp = NULL;
 	files->size = -1;

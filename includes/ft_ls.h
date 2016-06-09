@@ -6,7 +6,7 @@
 /*   By: sgaudin <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/05/17 11:09:05 by sgaudin           #+#    #+#             */
-/*   Updated: 2016/06/09 09:55:02 by sgaudin          ###   ########.fr       */
+/*   Updated: 2016/06/09 11:08:58 by sgaudin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,9 +16,12 @@
 # include <dirent.h>
 # include <sys/stat.h>
 # include <sys/xattr.h>
+# include <sys/types.h>
 # include <time.h>
 # include <stdlib.h>
 # include <stdio.h>
+# include <grp.h>
+# include <pwd.h>
 
 # include "../libft/includes/libft.h"
 
@@ -37,11 +40,11 @@
 typedef struct		s_files
 {
 	int				type;
-	char			*rights;
-	int				links;
+	char			rights[11];
+	unsigned int	links;
 	char			*own_name;
 	char			*own_grp;
-	int				size;
+	intmax_t		size;
 	int				timestamp;
 	char			*name;
 	char			*path;
