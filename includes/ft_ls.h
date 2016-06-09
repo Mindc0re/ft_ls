@@ -6,7 +6,7 @@
 /*   By: sgaudin <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/05/17 11:09:05 by sgaudin           #+#    #+#             */
-/*   Updated: 2016/06/09 11:08:58 by sgaudin          ###   ########.fr       */
+/*   Updated: 2016/06/09 11:18:23 by sgaudin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,7 @@ typedef struct		s_files
 	char			*own_name;
 	char			*own_grp;
 	intmax_t		size;
-	int				timestamp;
+	char			*lastmodtime;
 	char			*name;
 	char			*path;
 	struct s_files	*next;

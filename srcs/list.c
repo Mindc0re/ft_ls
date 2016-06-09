@@ -6,7 +6,7 @@
 /*   By: sgaudin <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/05/23 09:26:44 by sgaudin           #+#    #+#             */
-/*   Updated: 2016/06/09 10:50:17 by sgaudin          ###   ########.fr       */
+/*   Updated: 2016/06/09 11:29:43 by sgaudin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,7 @@ t_files		*init_file(void)
 	files->own_name = NULL;
 	files->own_grp = NULL;
 	files->size = -1;
-	files->timestamp = -1;
+	files->lastmodtime = NULL;
 	files->name = NULL;
 	files->prev = NULL;
 	files->next = NULL;

@@ -6,11 +6,18 @@
 /*   By: sgaudin <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/05/31 13:44:23 by sgaudin           #+#    #+#             */
-/*   Updated: 2016/06/09 11:11:04 by sgaudin          ###   ########.fr       */
+/*   Updated: 2016/06/09 11:33:39 by sgaudin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/ft_ls.h"
+
+void		get_time(t_files **new, struct stat *file)
+{
+	(*new)->lastmodtime = ctime(&file->st_mtime);
+	ft_printf("TIME : %s%s\n", (*new)->lastmodtime, (*new)->name);
+	//	ft_printf("TEST : %s %D %s %s %jd %s\n", (*new)->rights, (*new)->links, (*new)->own_name, (*new)->own_grp, (*new)->size, (*new)->name);
+}
 
 void		get_infos(t_files **new, struct stat *file)
 {
@@ -25,7 +32,7 @@ void		get_infos(t_files **new, struct stat *file)
 	(*new)->own_grp = ft_strnew(ft_strlen(grp->gr_name));
 	ft_strcpy((*new)->own_grp, grp->gr_name);
 	(*new)->size = (intmax_t)file->st_size;
-//	ft_printf("TEST : %s %D %s %s %jd %s\n", (*new)->rights, (*new)->links, (*new)->own_name, (*new)->own_grp, (*new)->size, (*new)->name);
+	get_time(new, file);
 }
 
 void		get_rights(t_files **new, struct stat *file)
