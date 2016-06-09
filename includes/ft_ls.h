@@ -6,7 +6,7 @@
 /*   By: sgaudin <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/05/17 11:09:05 by sgaudin           #+#    #+#             */
-/*   Updated: 2016/06/07 11:14:27 by sgaudin          ###   ########.fr       */
+/*   Updated: 2016/06/09 09:55:02 by sgaudin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -99,13 +99,11 @@ void				create_list(char *str, t_files **list, t_all *all);
 void				parser_args(char **av, t_all *all);
 void				read_dir(t_all *all, char *str);
 void				print_list(t_all *all);
-void				tri_lst(t_files **list);
+void				tri_lst(t_files **list, t_all *all);
 
 void				get_type(t_files **files, struct stat *file);
 
 void				free_args(t_all *all);
 void				free_list(t_all *all, t_files **list);
-
-void				flag_f(t_all *all);
 
 #endif

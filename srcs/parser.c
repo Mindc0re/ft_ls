@@ -6,7 +6,7 @@
 /*   By: sgaudin <sgaudin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/05/18 10:37:52 by sgaudin           #+#    #+#             */
-/*   Updated: 2016/06/09 09:43:05 by sgaudin          ###   ########.fr       */
+/*   Updated: 2016/06/09 09:56:10 by sgaudin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ static void		first_parse(t_all *all)
 		else
 			break ;
 	}
-	tri_lst(&all->list_bis);
+	tri_lst(&all->list_bis, all);
 	print_list(all);
 }
 

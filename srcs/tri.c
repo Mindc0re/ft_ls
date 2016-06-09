@@ -6,7 +6,7 @@
 /*   By: sgaudin <sgaudin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/06/06 13:32:01 by sgaudin           #+#    #+#             */
-/*   Updated: 2016/06/08 09:11:17 by sgaudin          ###   ########.fr       */
+/*   Updated: 2016/06/09 09:55:39 by sgaudin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ void		swap(t_files **list)
 	(*list)->next = tmp.next;
 }
 
-void		tri_lst(t_files **list)
+void		tri_lst(t_files **list, t_all *all)
 {
 	FT_INIT(int, check, 0);
 	backlist(NULL, W_FILE, &(*list));
@@ -35,10 +35,21 @@ void		tri_lst(t_files **list)
 	{
 		if ((*list)->next)
 		{
-			if (ft_strcmp((*list)->name, (*list)->next->name) > 0)
+			if (all->flag_r)
 			{
-				swap(&(*list));
-				check++;
+				if (ft_strcmp((*list)->name, (*list)->next->name) < 0)
+				{
+					swap(&(*list));
+					check++;
+				}
+			}
+			else
+			{
+				if (ft_strcmp((*list)->name, (*list)->next->name) > 0)
+				{
+					swap(&(*list));
+					check++;
+				}
 			}
 			if ((*list)->next)
 				(*list) = (*list)->next;
@@ -47,5 +58,5 @@ void		tri_lst(t_files **list)
 			break ;
 	}
 	if (check)
-		tri_lst(list);
+		tri_lst(list, all);
 }
