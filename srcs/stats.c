@@ -6,13 +6,13 @@
 /*   By: sgaudin <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/05/31 13:44:23 by sgaudin           #+#    #+#             */
-/*   Updated: 2016/06/09 17:39:12 by sgaudin          ###   ########.fr       */
+/*   Updated: 2016/06/09 18:27:02 by sgaudin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/ft_ls.h"
 
-void	get_time(t_files **new, struct stat *file)
+void		get_time(t_files **new, struct stat *file)
 {
 	char		*time;
 	char		**tmp_tab;

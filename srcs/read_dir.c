@@ -6,7 +6,7 @@
 /*   By: sgaudin <sgaudin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/06/03 09:31:59 by sgaudin           #+#    #+#             */
-/*   Updated: 2016/06/09 17:37:09 by sgaudin          ###   ########.fr       */
+/*   Updated: 2016/06/09 18:19:19 by sgaudin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,9 +28,11 @@ void		flag_r_detect(t_all *all)
 	{
 		while (all->list)
 		{
-			if (all->list->type == T_DIR && ft_strcmp(".", all->list->name) && ft_strcmp("..", all->list->name))
+			if (all->list->type == T_DIR && ft_strcmp(".", all->list->name)
+				&& ft_strcmp("..", all->list->name))
 			{
-				tmp_path = ft_strcmp(all->args->name, "./") ? ft_strjoin(all->args->name, "/") : ft_strdup("./");
+				tmp_path = ft_strcmp(all->args->name, "./")
+					? ft_strjoin(all->args->name, "/") : ft_strdup("./");
 				all->ac++;
 				create_args(all, ft_strjoin(tmp_path, all->list->name), 0);
 				free(tmp_path);
@@ -43,27 +45,6 @@ void		flag_r_detect(t_all *all)
 	}
 }
 
-/*
-void		flag_r_detect(t_all *all, struct dirent **file)
-{
-	char *tmp_path;
-
-	tmp_path = NULL;
-	if (all->list)
-	{
-		if (all->flag_r_big && !(ft_strcmp(all->list->name, (*file)->d_name)))
-		{
-			if (all->list->type == T_DIR && ft_strcmp(".", (*file)->d_name) && ft_strcmp("..", (*file)->d_name))
-			{
-				tmp_path = ft_strjoin(all->args->name, "/");
-				all->ac++;
-				create_args(all, ft_strjoin(tmp_path, (*file)->d_name), 0);
-				free(tmp_path);
-			}
-		}
-	}
-}
-*/
 void		read_dir(t_all *all, char *str)
 {
 	DIR				*dir;

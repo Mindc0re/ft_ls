@@ -6,7 +6,7 @@
 /*   By: sgaudin <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/05/17 11:09:05 by sgaudin           #+#    #+#             */
-/*   Updated: 2016/06/09 17:37:58 by sgaudin          ###   ########.fr       */
+/*   Updated: 2016/06/09 17:49:00 by sgaudin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -100,7 +100,7 @@ t_files				*init_file(void);
 t_dir				*init_list(void);
 void				backlist(t_all *all, int which, t_files **list);
 
-int					create_args(t_all *all, char *str, int next);
+void				create_args(t_all *all, char *str, int next);
 void				create_list(char *str, t_files **list, t_all *all);
 void				parser_args(char **av, t_all *all);
 void				read_dir(t_all *all, char *str);

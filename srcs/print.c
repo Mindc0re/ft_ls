@@ -6,7 +6,7 @@
 /*   By: sgaudin <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/06/09 17:20:52 by sgaudin           #+#    #+#             */
-/*   Updated: 2016/06/09 17:41:25 by sgaudin          ###   ########.fr       */
+/*   Updated: 2016/06/09 18:18:34 by sgaudin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,28 +62,23 @@ void		print_list_reg(t_all *all)
 	if (all->list)
 	{
 		backlist(all, W_FILE, &all->list);
+		if (ft_strcmp("./", all->args->name) && all->ac >= 2)
+		{
+			if (!all->args->prev)
+				ft_printf("%s:\n", all->args->name);
+			else
+				ft_printf("\n%s:\n", all->args->name);
+		}
 		if (all->flag_l)
 			ft_printf("total %d\n", all->total);
-		if (ft_strcmp("./", all->args->name) && all->ac >= 2)
-			ft_printf("\n%s:\n\n", all->args->name);
 		while (all->list->next)
 		{
 			verif_flag(all);
 			if (all->list->next)
 				all->list = all->list->next;
 			else
-				break;
+				break ;
 		}
 		verif_flag(all);
 	}
 }
-
-
-
-
-
-
-
-
-
-

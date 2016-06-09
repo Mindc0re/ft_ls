@@ -6,7 +6,7 @@
 /*   By: sgaudin <sgaudin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/05/18 10:37:52 by sgaudin           #+#    #+#             */
-/*   Updated: 2016/06/09 17:38:43 by sgaudin          ###   ########.fr       */
+/*   Updated: 2016/06/09 18:18:07 by sgaudin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ static void		create_list_spec(char *str, t_files **list)
 
 static void		first_parse(t_all *all)
 {
-	struct stat		stats;
+	struct stat		s;
 	DIR				*dir;
 	int				ret;
 
@@ -47,10 +47,13 @@ static void		first_parse(t_all *all)
 	{
 		if (!(dir = opendir(all->args->name)))
 		{
-			if ((ret = stat(all->args->name, &stats)) == 0)
+			if ((ret = stat(all->args->name, &s)) == 0 && !(S_ISDIR(s.st_mode)))
 				create_list_spec(all->args->name, &all->list_bis);
 			else
+			{
+				ft_printf("%s: ", all->args->name);
 				perror("ft_ls");
+			}
 		}
 		if (all->args->next)
 			all->args = all->args->next;
@@ -85,32 +88,22 @@ static void		parse_flag(char *str, t_all *all)
 	}
 }
 
-void			parser_ls(t_all *all)
+void			parser_ls(t_all *a)
 {
-	struct stat		stats;
 	DIR				*dir;
-	int				ret;
 
-	backlist(all, W_ARGS, NULL);
-	while (all->args)
+	backlist(a, W_ARGS, NULL);
+	while (a->args)
 	{
-		free_list(all, &all->list);
-		if (!(dir = opendir(all->args->name)))
-		{
-			if ((ret = stat(all->args->name, &stats)) == -1 || S_ISDIR(stats.st_mode))
-			{
-				ft_printf("%s: ", all->args->name);
-				perror("ft_ls");
-			}
-		}
-		else
+		free_list(a, &a->list);
+		if ((dir = opendir(a->args->name)))
 		{
 			closedir(dir);
-			read_dir(all, all->args->name);
-			print_list_hub(all);
+			read_dir(a, a->args->name);
+			print_list_hub(a);
 		}
-		if (all->args->next)
-			all->args = all->args->next;
+		if (a->args->next)
+			a->args = a->args->next;
 		else
 			break ;
 	}
@@ -118,8 +111,7 @@ void			parser_ls(t_all *all)
 
 void			parser_args(char **av, t_all *all)
 {
-	int check = 0;
-
+	FT_INIT(int, check, 0);
 	FT_INIT(int, i, 1);
 	while (i < all->ac)
 	{

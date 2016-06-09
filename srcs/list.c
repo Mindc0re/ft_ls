@@ -6,7 +6,7 @@
 /*   By: sgaudin <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/05/23 09:26:44 by sgaudin           #+#    #+#             */
-/*   Updated: 2016/06/09 14:50:19 by sgaudin          ###   ########.fr       */
+/*   Updated: 2016/06/09 17:49:09 by sgaudin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,7 +60,7 @@ t_files		*init_file(void)
 	return (files);
 }
 
-int			create_args(t_all *all, char *str, int next)
+void		create_args(t_all *all, char *str, int next)
 {
 	static int	check = 0;
 	t_dir		*new;
@@ -87,7 +87,6 @@ int			create_args(t_all *all, char *str, int next)
 			all->args = all->args->next;
 		}
 	}
-	return (0);
 }
 
 void		create_list(char *str, t_files **list, t_all *all)
