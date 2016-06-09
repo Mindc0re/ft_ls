@@ -6,7 +6,7 @@
 /*   By: sgaudin <sgaudin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/05/18 10:37:52 by sgaudin           #+#    #+#             */
-/*   Updated: 2016/06/09 09:56:10 by sgaudin          ###   ########.fr       */
+/*   Updated: 2016/06/09 10:01:52 by sgaudin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,8 @@ static void		first_parse(t_all *all)
 		else
 			break ;
 	}
-	tri_lst(&all->list_bis, all);
+	if (!all->flag_f)
+		tri_lst(&all->list_bis, all);
 	print_list(all);
 }
 
@@ -42,7 +43,7 @@ static void		parse_flag(char *str, t_all *all)
 	{
 		all->flag_r_big = (str[i] == 'R') ? 1 : all->flag_r_big;
 		all->flag_t = (str[i] == 't') ? 1 : all->flag_t;
-		all->flag_a = (str[i] == 'a') ? 1 : all->flag_a;
+		all->flag_a = (str[i] == 'a') || (str[i] == 'f') ? 1 : all->flag_a;
 		all->flag_r = (str[i] == 'r') ? 1 : all->flag_r;
 		all->flag_l = (str[i] == 'l') ? 1 : all->flag_l;
 		all->flag_f = (str[i] == 'f') ? 1 : all->flag_f;

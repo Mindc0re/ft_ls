@@ -6,18 +6,16 @@
 #    By: sgaudin <sgaudin@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2016/05/18 11:08:40 by sgaudin           #+#    #+#              #
-#    Updated: 2016/06/07 11:12:37 by sgaudin          ###   ########.fr        #
+#    Updated: 2016/06/09 10:07:44 by sgaudin          ###   ########.fr        #
 #                                                                              #
 #******************************************************************************#
 
 NAME = ft_ls
 
-CC = gcc -Wall -Wextra #-Werror
+CC = gcc -Wall -Wextra -Werror
 
-FLAGS = srcs/flag_fcts/
-
-SRC = srcs/parser.c srcs/main.c srcs/list.c srcs/free_fct.c $(FLAGS)flag_f.c \
-	srcs/utils.c srcs/stats.c srcs/read_dir.c srcs/tri.c
+SRC = srcs/parser.c srcs/main.c srcs/list.c srcs/free_fct.c	srcs/utils.c \
+	srcs/stats.c srcs/read_dir.c srcs/tri.c
 
 LFT = ./libft/
 

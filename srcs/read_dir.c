@@ -6,7 +6,7 @@
 /*   By: sgaudin <sgaudin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/06/03 09:31:59 by sgaudin           #+#    #+#             */
-/*   Updated: 2016/06/09 09:55:15 by sgaudin          ###   ########.fr       */
+/*   Updated: 2016/06/09 10:00:14 by sgaudin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -135,7 +135,8 @@ void		read_dir(t_all *all, char *str)
 		else
 			create_list(file->d_name, &all->list, all);
 	}
-	tri_lst(&all->list, all);
+	if (!all->flag_f)
+		tri_lst(&all->list, all);
 	flag_r_detect(all);
 	closedir(dir);
 }
