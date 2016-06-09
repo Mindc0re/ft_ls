@@ -6,7 +6,7 @@
 /*   By: sgaudin <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/05/17 11:09:05 by sgaudin           #+#    #+#             */
-/*   Updated: 2016/06/09 11:18:23 by sgaudin          ###   ########.fr       */
+/*   Updated: 2016/06/09 17:37:58 by sgaudin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,11 +40,12 @@
 typedef struct		s_files
 {
 	int				type;
-	char			rights[11];
+	int				nb_blocks;
+	intmax_t		size;
 	unsigned int	links;
+	char			rights[11];
 	char			*own_name;
 	char			*own_grp;
-	intmax_t		size;
 	char			*lastmodtime;
 	char			*name;
 	char			*path;
@@ -69,6 +70,7 @@ typedef struct		s_all
 	int				flag_l;
 	int				flag_f;
 	int				max_length;
+	int				total;
 	t_dir			*args;
 	t_files			*list;
 	t_files			*list_bis;
@@ -92,6 +94,7 @@ enum {
 }					types;
 
 void				get_max_length(t_all *all);
+void				get_total_blocks(t_all *all);
 
 t_files				*init_file(void);
 t_dir				*init_list(void);
@@ -101,8 +104,11 @@ int					create_args(t_all *all, char *str, int next);
 void				create_list(char *str, t_files **list, t_all *all);
 void				parser_args(char **av, t_all *all);
 void				read_dir(t_all *all, char *str);
-void				print_list(t_all *all);
 void				tri_lst(t_files **list, t_all *all);
+
+void				print_list_hub(t_all *all);
+void				print_list_bis(t_all *all);
+void				print_list_reg(t_all *all);
 
 void				get_type(t_files **files, struct stat *file);
 

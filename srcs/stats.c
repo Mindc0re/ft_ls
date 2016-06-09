@@ -6,17 +6,25 @@
 /*   By: sgaudin <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/05/31 13:44:23 by sgaudin           #+#    #+#             */
-/*   Updated: 2016/06/09 11:33:39 by sgaudin          ###   ########.fr       */
+/*   Updated: 2016/06/09 17:39:12 by sgaudin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/ft_ls.h"
 
-void		get_time(t_files **new, struct stat *file)
+void	get_time(t_files **new, struct stat *file)
 {
-	(*new)->lastmodtime = ctime(&file->st_mtime);
-	ft_printf("TIME : %s%s\n", (*new)->lastmodtime, (*new)->name);
-	//	ft_printf("TEST : %s %D %s %s %jd %s\n", (*new)->rights, (*new)->links, (*new)->own_name, (*new)->own_grp, (*new)->size, (*new)->name);
+	char		*time;
+	char		**tmp_tab;
+
+	time = ctime(&file->st_mtime);
+	tmp_tab = ft_strsplit(time, ' ');
+	time = ft_strsub(tmp_tab[3], 0,
+	ft_strlen(tmp_tab[3]) - ft_strlen(ft_strrchr(tmp_tab[3], ':')));
+	(*new)->lastmodtime = ft_strjoin(tmp_tab[1], " ");
+	(*new)->lastmodtime = ft_strjoin((*new)->lastmodtime, tmp_tab[2]);
+	(*new)->lastmodtime = ft_strjoin((*new)->lastmodtime, " ");
+	(*new)->lastmodtime = ft_strjoin((*new)->lastmodtime, time);
 }
 
 void		get_infos(t_files **new, struct stat *file)
@@ -27,11 +35,14 @@ void		get_infos(t_files **new, struct stat *file)
 	pwd = getpwuid(file->st_uid);
 	grp = getgrgid(file->st_gid);
 	(*new)->links = (unsigned int)file->st_nlink;
-	(*new)->own_name = ft_strnew(ft_strlen(pwd->pw_name));
-	ft_strcpy((*new)->own_name, pwd->pw_name);
-	(*new)->own_grp = ft_strnew(ft_strlen(grp->gr_name));
-	ft_strcpy((*new)->own_grp, grp->gr_name);
+	(*new)->own_name = pwd ? ft_strnew(ft_strlen(pwd->pw_name)) : NULL;
+	(*new)->own_grp = grp ? ft_strnew(ft_strlen(grp->gr_name)) : NULL;
+	if ((*new)->own_name)
+		ft_strcpy((*new)->own_name, pwd->pw_name);
+	if ((*new)->own_grp)
+		ft_strcpy((*new)->own_grp, grp->gr_name);
 	(*new)->size = (intmax_t)file->st_size;
+	(*new)->nb_blocks = file->st_blocks;
 	get_time(new, file);
 }
 

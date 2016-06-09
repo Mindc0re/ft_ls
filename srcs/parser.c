@@ -6,11 +6,35 @@
 /*   By: sgaudin <sgaudin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/05/18 10:37:52 by sgaudin           #+#    #+#             */
-/*   Updated: 2016/06/09 10:25:35 by sgaudin          ###   ########.fr       */
+/*   Updated: 2016/06/09 17:38:43 by sgaudin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/ft_ls.h"
+
+static void		create_list_spec(char *str, t_files **list)
+{
+	t_files		*new;
+	struct stat	file;
+
+	if (!(*list))
+	{
+		(*list) = init_file();
+		(*list)->name = str;
+		stat((*list)->name, &file);
+		get_type(&(*list), &file);
+	}
+	else
+	{
+		new = init_file();
+		new->name = str;
+		stat(new->name, &file);
+		get_type(&new, &file);
+		new->prev = (*list);
+		(*list)->next = new;
+		(*list) = (*list)->next;
+	}
+}
 
 static void		first_parse(t_all *all)
 {
@@ -24,7 +48,9 @@ static void		first_parse(t_all *all)
 		if (!(dir = opendir(all->args->name)))
 		{
 			if ((ret = stat(all->args->name, &stats)) == 0)
-				create_list(all->args->name, &all->list_bis, all);
+				create_list_spec(all->args->name, &all->list_bis);
+			else
+				perror("ft_ls");
 		}
 		if (all->args->next)
 			all->args = all->args->next;
@@ -33,7 +59,7 @@ static void		first_parse(t_all *all)
 	}
 	if (!all->flag_f)
 		tri_lst(&all->list_bis, all);
-	print_list(all);
+	print_list_hub(all);
 }
 
 static void		parse_flag(char *str, t_all *all)
@@ -81,7 +107,7 @@ void			parser_ls(t_all *all)
 		{
 			closedir(dir);
 			read_dir(all, all->args->name);
-			print_list(all);
+			print_list_hub(all);
 		}
 		if (all->args->next)
 			all->args = all->args->next;

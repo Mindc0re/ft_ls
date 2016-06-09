@@ -6,7 +6,7 @@
 /*   By: sgaudin <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/05/23 12:39:34 by sgaudin           #+#    #+#             */
-/*   Updated: 2016/05/31 09:14:25 by sgaudin          ###   ########.fr       */
+/*   Updated: 2016/06/09 16:57:18 by sgaudin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,4 +29,24 @@ void			get_max_length(t_all *all)
 	}
 	if (dir)
 		closedir(dir);
+}
+
+void		get_total_blocks(t_all *all)
+{
+	int	blocks;
+
+	blocks = 0;
+//	if (all->flag_l)
+//	{
+		backlist(all, W_FILE, &all->list);
+		while (all->list)
+		{
+			blocks += all->list->nb_blocks;
+			if (all->list->next)
+				all->list = all->list->next;
+			else
+				break ;
+		}
+		all->total = blocks;
+//	}
 }
