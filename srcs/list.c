@@ -6,7 +6,7 @@
 /*   By: sgaudin <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/05/23 09:26:44 by sgaudin           #+#    #+#             */
-/*   Updated: 2016/06/10 13:48:23 by sgaudin          ###   ########.fr       */
+/*   Updated: 2016/06/10 16:50:14 by sgaudin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,11 @@ t_files		*init_file(void)
 	files->own_name = NULL;
 	files->own_grp = NULL;
 	files->size = -1;
+	files->time[0] = NULL;
+	files->time[1] = NULL;
+	files->time[2] = NULL;
 	files->name = NULL;
+	files->tmp_lnk = NULL;
 	files->prev = NULL;
 	files->next = NULL;
 	return (files);
@@ -80,9 +84,8 @@ void		create_list(char *str, t_files **list, t_all *all)
 	if (!(*list))
 	{
 		(*list) = init_file();
-		(*list)->name = str;
-		(*list)->path = ft_strjoin(all->args->name, "/");
-		(*list)->path = ft_strjoin((*list)->path, str);
+		(*list)->name = ft_strdup(str);
+		create_path(list, str, all);
 		lstat((*list)->path, &file);
 		get_type(&(*list), &file, all);
 	}
@@ -90,8 +93,7 @@ void		create_list(char *str, t_files **list, t_all *all)
 	{
 		new = init_file();
 		new->name = ft_strdup(str);
-		new->path = ft_strjoin(all->args->name, "/");
-		new->path = ft_strjoin(new->path, str);
+		create_path(&new, str, all);
 		lstat(new->path, &file);
 		get_type(&new, &file, all);
 		new->prev = (*list);

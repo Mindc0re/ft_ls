@@ -6,7 +6,7 @@
 /*   By: sgaudin <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/05/17 11:09:05 by sgaudin           #+#    #+#             */
-/*   Updated: 2016/06/10 13:46:39 by sgaudin          ###   ########.fr       */
+/*   Updated: 2016/06/10 17:08:56 by sgaudin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,6 +51,7 @@ typedef struct		s_files
 	char			*own_grp;
 	char			*time[4];
 	char			*name;
+	char			*tmp_lnk;
 	char			*path;
 	struct s_files	*next;
 	struct s_files	*prev;
@@ -96,8 +97,9 @@ enum {
 	T_SOCK
 }					types;
 
-void				get_max_length(t_all *all);
 void				get_total_blocks(t_all *all);
+void				create_link(t_files **new, struct stat *file, t_all *all);
+void				create_path(t_files **list, char *str, t_all *all);
 
 t_files				*init_file(void);
 void				backlist(t_files **list);
@@ -114,7 +116,8 @@ void				print_list_reg(t_all *all);
 
 void				get_type(t_files **files, struct stat *file, t_all *all);
 
-void				free_args(t_all *all);
 void				free_list(t_files **list);
+void				free_node(t_files **list);
+void				free_tab(char **tab);
 
 #endif

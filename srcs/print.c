@@ -6,7 +6,7 @@
 /*   By: sgaudin <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/06/09 17:20:52 by sgaudin           #+#    #+#             */
-/*   Updated: 2016/06/10 14:28:54 by sgaudin          ###   ########.fr       */
+/*   Updated: 2016/06/10 16:18:50 by sgaudin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,13 @@ void		print_l(t_all *all, t_files **list)
 	ft_strdel(&tmp);
 	ft_printf(tmp = set_printf(all->max_length[6], "s "), (*list)->time[2]);
 	ft_strdel(&tmp);
-	ft_printf("%s\n", (*list)->name);
+	if ((*list)->tmp_lnk)
+	{
+		ft_printf("%s%s\n", (*list)->name, (*list)->tmp_lnk);
+		free((*list)->tmp_lnk);
+	}
+	else
+		ft_printf("%s\n", (*list)->name);
 }
 
 void		print_list_bis(t_all *all)

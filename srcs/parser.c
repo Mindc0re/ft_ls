@@ -6,7 +6,7 @@
 /*   By: sgaudin <sgaudin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/05/18 10:37:52 by sgaudin           #+#    #+#             */
-/*   Updated: 2016/06/10 14:45:36 by sgaudin          ###   ########.fr       */
+/*   Updated: 2016/06/10 16:56:56 by sgaudin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,14 +20,14 @@ static void		create_list_spec(char *str, t_files **list, t_all *all)
 	if (!(*list))
 	{
 		(*list) = init_file();
-		(*list)->name = str;
+		(*list)->name = ft_strdup(str);
 		lstat((*list)->name, &file);
 		get_type(&(*list), &file, all);
 	}
 	else
 	{
 		new = init_file();
-		new->name = str;
+		new->name = ft_strdup(str);
 		lstat(new->name, &file);
 		get_type(&new, &file, all);
 		new->prev = (*list);
@@ -80,7 +80,7 @@ static void		parse_flag(char *str, t_all *all)
 		{
 			ft_printf("ft_ls : illegal option -- %c\n", str[i]);
 			ft_printf("Avalaible options : [atlRrf]\n");
-			free_args(all);
+			free_list(&all->args);
 			free(all);
 			exit(EXIT_SUCCESS);
 		}

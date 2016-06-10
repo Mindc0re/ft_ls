@@ -6,7 +6,7 @@
 /*   By: sgaudin <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/05/31 13:44:23 by sgaudin           #+#    #+#             */
-/*   Updated: 2016/06/10 14:29:20 by sgaudin          ###   ########.fr       */
+/*   Updated: 2016/06/10 17:56:50 by sgaudin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,23 +34,27 @@ void		get_max_lengths(t_files **new, t_all *a)
 
 void		get_time(t_files **new, struct stat *file, t_all *all)
 {
-	char			*time_str;
-	char			**tmp_tab;
+	char			**tmp;
 	long int		timestamp;
 
-	timestamp = file->st_mtimespec.tv_sec - time(NULL);
-	timestamp = timestamp < 0 ? -timestamp : timestamp;
-	time_str = ft_strdup(ctime(&file->st_mtime));
-	tmp_tab = ft_strsplit(time_str, ' ');
-	time_str = ft_strsub(tmp_tab[3], 0,
-	ft_strlen(tmp_tab[3]) - ft_strlen(ft_strrchr(tmp_tab[3], ':')));
-	(*new)->time_sec = file->st_mtimespec.tv_sec;
-	(*new)->time[0] = ft_strdup(tmp_tab[1]);
-	(*new)->time[1] = ft_strdup(tmp_tab[2]);
-	(*new)->time[2] = timestamp > SIX_MONTHS ?
-	ft_strsub(tmp_tab[4], 0, ft_strlen(tmp_tab[4]) - 1) : time_str;
-	(*new)->time[3] = NULL;
-	get_max_lengths(new, all);
+	if (all->flag_t || all->flag_l)
+	{
+		FT_INIT(char *, time_str, NULL);
+		timestamp = file->st_mtimespec.tv_sec - time(NULL);
+		timestamp = timestamp < 0 ? -timestamp : timestamp;
+		time_str = ft_strdup(ctime(&file->st_mtime));
+		tmp = ft_strsplit(time_str, ' ');
+		time_str = ft_strsub(tmp[3], 0,
+		ft_strlen(tmp[3]) - ft_strlen(ft_strrchr(tmp[3], ':')));
+		(*new)->time_sec = file->st_mtimespec.tv_sec;
+		(*new)->time[0] = ft_strdup(tmp[1]);
+		(*new)->time[1] = ft_strdup(tmp[2]);
+		(*new)->time[2] = timestamp > SIX_MONTHS ?
+		ft_strsub(tmp[4], 0, ft_strlen(tmp[4]) - 1) : ft_strdup(time_str);
+		(*new)->time[3] = NULL;
+	}
+	if (all->flag_l)
+		get_max_lengths(new, all);
 }
 
 void		get_infos(t_files **new, struct stat *file, t_all *all)
@@ -70,13 +74,7 @@ void		get_infos(t_files **new, struct stat *file, t_all *all)
 	(*new)->size = (intmax_t)file->st_size;
 	(*new)->nb_blocks = file->st_blocks;
 	get_time(new, file, all);
-	if ((*new)->rights[0] == 'l')
-	{
-		FT_INIT(char *, link, (char *)malloc(sizeof(char) * file->st_size + 1));
-		readlink((*new)->path, link, file->st_size + 1);
-		link = ft_strjoin(" -> ", link);
-		(*new)->name = ft_strjoin((*new)->name, link);
-	}
+	create_link(new, file, all);
 }
 
 void		get_rights(t_files **new, struct stat *file, t_all *all)

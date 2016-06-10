@@ -6,7 +6,7 @@
 /*   By: sgaudin <sgaudin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/05/18 10:39:46 by sgaudin           #+#    #+#             */
-/*   Updated: 2016/06/10 13:56:41 by sgaudin          ###   ########.fr       */
+/*   Updated: 2016/06/10 16:34:33 by sgaudin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ int			main(int ac, char **av)
 	all->ac = ac;
 	init_all(all);
 	parser_args(av, all);
-	free_args(all);
+	free_list(&all->args);
 	free_list(&all->list);
 	free_list(&all->list_bis);
 	free(all);
