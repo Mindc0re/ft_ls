@@ -6,7 +6,7 @@
 /*   By: sgaudin <sgaudin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/05/18 10:39:46 by sgaudin           #+#    #+#             */
-/*   Updated: 2016/06/03 14:34:59 by sgaudin          ###   ########.fr       */
+/*   Updated: 2016/06/10 10:52:48 by sgaudin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ static void	init_all(t_all *all)
 	all->flag_l = 0;
 	all->flag_f = 0;
 	all->max_length = 0;
-	all->args = init_list();
+	all->args = init_file();
 	all->list = NULL;
 	all->list_bis = NULL;
 }
@@ -35,8 +35,8 @@ int			main(int ac, char **av)
 	init_all(all);
 	parser_args(av, all);
 	free_args(all);
-	free_list(all, &all->list);
-	free_list(all, &all->list_bis);
+	free_list(&all->list);
+	free_list(&all->list_bis);
 	free(all);
 	exit(EXIT_SUCCESS);
 }

@@ -6,7 +6,7 @@
 /*   By: sgaudin <sgaudin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/06/06 13:32:01 by sgaudin           #+#    #+#             */
-/*   Updated: 2016/06/09 18:25:56 by sgaudin          ###   ########.fr       */
+/*   Updated: 2016/06/10 10:53:50 by sgaudin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,9 +27,19 @@ void		swap(t_files **list)
 	(*list)->next = tmp.next;
 }
 
-int			tri_r(t_files **list)
+int			tri_flag(t_files **list, t_all *all)
 {
-	if (ft_strcmp((*list)->name, (*list)->next->name) < 0)
+	if (ft_strcmp((*list)->name, (*list)->next->name) < 0 && all->flag_r && !all->flag_t)
+	{
+		swap(&(*list));
+		return (1);
+	}
+	else if (((*list)->time_sec - (*list)->next->time_sec) < 0 && all->flag_t && !all->flag_r)
+	{
+		swap(&(*list));
+		return (1);
+	}
+	else if (all->flag_t && all->flag_r && ((*list)->time_sec - (*list)->next->time_sec) > 0)
 	{
 		swap(&(*list));
 		return (1);
@@ -40,13 +50,13 @@ int			tri_r(t_files **list)
 void		tri_lst(t_files **list, t_all *all)
 {
 	FT_INIT(int, check, 0);
-	backlist(NULL, W_FILE, &(*list));
+	backlist(&(*list));
 	while ((*list))
 	{
 		if ((*list)->next)
 		{
-			if (all->flag_r)
-				check = tri_r(&(*list)) == 1 ? check + 1 : check;
+			if (all->flag_r || all->flag_t)
+				check = tri_flag(&(*list), all) == 1 ? check + 1 : check;
 			else
 			{
 				if (ft_strcmp((*list)->name, (*list)->next->name) > 0)

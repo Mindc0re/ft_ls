@@ -6,41 +6,19 @@
 /*   By: sgaudin <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/05/23 09:26:44 by sgaudin           #+#    #+#             */
-/*   Updated: 2016/06/09 17:49:09 by sgaudin          ###   ########.fr       */
+/*   Updated: 2016/06/10 11:23:04 by sgaudin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/ft_ls.h"
 
-void		backlist(t_all *all, int which, t_files **list)
+void		backlist(t_files **list)
 {
-	if (which == W_ARGS)
+	if ((*list))
 	{
-		if (all->args)
-		{
-			while (all->args->prev)
-				all->args = all->args->prev;
-		}
+		while ((*list)->prev)
+			(*list) = (*list)->prev;
 	}
-	else if (which == W_FILE)
-	{
-		if ((*list))
-		{
-			while ((*list)->prev)
-				(*list) = (*list)->prev;
-		}
-	}
-}
-
-t_dir		*init_list(void)
-{
-	t_dir	*dir;
-
-	dir = (t_dir *)malloc(sizeof(t_dir));
-	dir->prev = NULL;
-	dir->next = NULL;
-	dir->name = NULL;
-	return (dir);
 }
 
 t_files		*init_file(void)
@@ -62,20 +40,22 @@ t_files		*init_file(void)
 
 void		create_args(t_all *all, char *str, int next)
 {
+	struct stat	file;
 	static int	check = 0;
-	t_dir		*new;
+	t_files		*new;
 
+	lstat(str, &file);
 	if (!check++)
 	{
-		all->args->name = ft_strnew(ft_strlen(str));
-		all->args->name = str;
+		all->args->name = ft_strdup(str);
+		get_type(&all->args, &file);
 	}
 	else
 	{
-		new = init_list();
-		new->name = ft_strnew(ft_strlen(str));
-		new->name = str;
+		new = init_file();
+		new->name = ft_strdup(str);
 		new->prev = all->args;
+		get_type(&new, &file);
 		if (!next)
 		{
 			new->next = all->args->next;
@@ -100,16 +80,16 @@ void		create_list(char *str, t_files **list, t_all *all)
 		(*list)->name = str;
 		(*list)->path = ft_strjoin(all->args->name, "/");
 		(*list)->path = ft_strjoin((*list)->path, str);
-		stat((*list)->path, &file);
+		lstat((*list)->path, &file);
 		get_type(&(*list), &file);
 	}
 	else
 	{
 		new = init_file();
-		new->name = str;
+		new->name = ft_strdup(str);
 		new->path = ft_strjoin(all->args->name, "/");
 		new->path = ft_strjoin(new->path, str);
-		stat(new->path, &file);
+		lstat(new->path, &file);
 		get_type(&new, &file);
 		new->prev = (*list);
 		(*list)->next = new;

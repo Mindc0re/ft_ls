@@ -6,7 +6,7 @@
 /*   By: sgaudin <sgaudin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/05/18 10:37:52 by sgaudin           #+#    #+#             */
-/*   Updated: 2016/06/09 18:18:07 by sgaudin          ###   ########.fr       */
+/*   Updated: 2016/06/10 11:24:18 by sgaudin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,14 +21,14 @@ static void		create_list_spec(char *str, t_files **list)
 	{
 		(*list) = init_file();
 		(*list)->name = str;
-		stat((*list)->name, &file);
+		lstat((*list)->name, &file);
 		get_type(&(*list), &file);
 	}
 	else
 	{
 		new = init_file();
 		new->name = str;
-		stat(new->name, &file);
+		lstat(new->name, &file);
 		get_type(&new, &file);
 		new->prev = (*list);
 		(*list)->next = new;
@@ -42,12 +42,12 @@ static void		first_parse(t_all *all)
 	DIR				*dir;
 	int				ret;
 
-	backlist(all, W_ARGS, NULL);
+	backlist(&all->args);
 	while (all->args)
 	{
 		if (!(dir = opendir(all->args->name)))
 		{
-			if ((ret = stat(all->args->name, &s)) == 0 && !(S_ISDIR(s.st_mode)))
+			if ((ret = lstat(all->args->name, &s)) == 0 && !(S_ISDIR(s.st_mode)))
 				create_list_spec(all->args->name, &all->list_bis);
 			else
 			{
@@ -92,10 +92,10 @@ void			parser_ls(t_all *a)
 {
 	DIR				*dir;
 
-	backlist(a, W_ARGS, NULL);
+	backlist(&a->args);
 	while (a->args)
 	{
-		free_list(a, &a->list);
+		free_list(&a->list);
 		if ((dir = opendir(a->args->name)))
 		{
 			closedir(dir);
@@ -126,7 +126,8 @@ void			parser_args(char **av, t_all *all)
 	}
 	if (check == 0)
 		create_args(all, "./", 1);
-	backlist(all, W_ARGS, NULL);
+	tri_lst(&all->args, all);
+	backlist(&all->args);
 	first_parse(all);
 	parser_ls(all);
 }

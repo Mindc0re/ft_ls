@@ -6,7 +6,7 @@
 /*   By: sgaudin <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/05/17 11:09:05 by sgaudin           #+#    #+#             */
-/*   Updated: 2016/06/09 17:49:00 by sgaudin          ###   ########.fr       */
+/*   Updated: 2016/06/10 10:57:36 by sgaudin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,6 +43,7 @@ typedef struct		s_files
 	int				nb_blocks;
 	intmax_t		size;
 	unsigned int	links;
+	long int		time_sec;
 	char			rights[11];
 	char			*own_name;
 	char			*own_grp;
@@ -71,7 +72,7 @@ typedef struct		s_all
 	int				flag_f;
 	int				max_length;
 	int				total;
-	t_dir			*args;
+	t_files			*args;
 	t_files			*list;
 	t_files			*list_bis;
 }					t_all;
@@ -97,8 +98,7 @@ void				get_max_length(t_all *all);
 void				get_total_blocks(t_all *all);
 
 t_files				*init_file(void);
-t_dir				*init_list(void);
-void				backlist(t_all *all, int which, t_files **list);
+void				backlist(t_files **list);
 
 void				create_args(t_all *all, char *str, int next);
 void				create_list(char *str, t_files **list, t_all *all);
@@ -113,6 +113,6 @@ void				print_list_reg(t_all *all);
 void				get_type(t_files **files, struct stat *file);
 
 void				free_args(t_all *all);
-void				free_list(t_all *all, t_files **list);
+void				free_list(t_files **list);
 
 #endif

@@ -6,7 +6,7 @@
 /*   By: sgaudin <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/06/09 17:20:52 by sgaudin           #+#    #+#             */
-/*   Updated: 2016/06/09 18:18:34 by sgaudin          ###   ########.fr       */
+/*   Updated: 2016/06/10 10:54:53 by sgaudin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ void		print_list_bis(t_all *all)
 {
 	if (all->list_bis)
 	{
-		backlist(all, W_FILE, &all->list_bis);
+		backlist(&all->list_bis);
 		while (all->list_bis->next)
 		{
 			if (all->flag_l)
@@ -28,7 +28,7 @@ void		print_list_bis(t_all *all)
 			all->list_bis = all->list_bis->next;
 		}
 		ft_printf("%s\n", all->list_bis->name);
-		free_list(all, &all->list_bis);
+		free_list(&all->list_bis);
 	}
 }
 
@@ -61,7 +61,7 @@ void		print_list_reg(t_all *all)
 {
 	if (all->list)
 	{
-		backlist(all, W_FILE, &all->list);
+		backlist(&all->list);
 		if (ft_strcmp("./", all->args->name) && all->ac >= 2)
 		{
 			if (!all->args->prev)
