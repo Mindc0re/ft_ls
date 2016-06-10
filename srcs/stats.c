@@ -6,30 +6,30 @@
 /*   By: sgaudin <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/05/31 13:44:23 by sgaudin           #+#    #+#             */
-/*   Updated: 2016/06/10 13:53:08 by sgaudin          ###   ########.fr       */
+/*   Updated: 2016/06/10 14:29:20 by sgaudin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/ft_ls.h"
 
-void		get_max_lengths(t_files **new, t_all *all)
+void		get_max_lengths(t_files **new, t_all *a)
 {
-	all->max_length[0] = (int)ft_strlen(ft_itoa((*new)->links)) > all->max_length[0]
-		? (int)ft_strlen(ft_itoa((*new)->links)) : all->max_length[0];
-	all->max_length[1] = (int)ft_strlen((*new)->own_name) > all->max_length[1] ?
-		(int)ft_strlen((*new)->own_name) : all->max_length[1];
-	all->max_length[2] = (int)ft_strlen((*new)->own_grp) > all->max_length[1] ?
-		(int)ft_strlen((*new)->own_grp) : all->max_length[2];
-	all->max_length[3] = (int)ft_strlen(ft_itoa((*new)->size)) > all->max_length[3]
-		? (int)ft_strlen(ft_itoa((*new)->size)) : all->max_length[3];
-	all->max_length[4] = (int)ft_strlen((*new)->time[0]) > all->max_length[4] ?
-		(int)ft_strlen((*new)->time[0]) : all->max_length[4];
-	all->max_length[5] = (int)ft_strlen((*new)->time[1]) > all->max_length[5] ?
-		(int)ft_strlen((*new)->time[1]) : all->max_length[5];
-	all->max_length[6] = (int)ft_strlen((*new)->time[2]) > all->max_length[6] ?
-		(int)ft_strlen((*new)->time[2]) : all->max_length[6];
-	all->max_length[7] = (int)ft_strlen((*new)->name) > all->max_length[7] ?
-		(int)ft_strlen((*new)->name) : all->max_length[7];
+	a->max_length[0] = (int)ft_strlen(ft_itoa((*new)->links)) > a->max_length[0]
+		? (int)ft_strlen(ft_itoa((*new)->links)) : a->max_length[0];
+	a->max_length[1] = (int)ft_strlen((*new)->own_name) > a->max_length[1] ?
+		(int)ft_strlen((*new)->own_name) : a->max_length[1];
+	a->max_length[2] = (int)ft_strlen((*new)->own_grp) > a->max_length[1] ?
+		(int)ft_strlen((*new)->own_grp) : a->max_length[2];
+	a->max_length[3] = (int)ft_strlen(ft_itoa((*new)->size)) > a->max_length[3]
+		? (int)ft_strlen(ft_itoa((*new)->size)) : a->max_length[3];
+	a->max_length[4] = (int)ft_strlen((*new)->time[0]) > a->max_length[4] ?
+		(int)ft_strlen((*new)->time[0]) : a->max_length[4];
+	a->max_length[5] = (int)ft_strlen((*new)->time[1]) > a->max_length[5] ?
+		(int)ft_strlen((*new)->time[1]) : a->max_length[5];
+	a->max_length[6] = (int)ft_strlen((*new)->time[2]) > a->max_length[6] ?
+		(int)ft_strlen((*new)->time[2]) : a->max_length[6];
+	a->max_length[7] = (int)ft_strlen((*new)->name) > a->max_length[7] ?
+		(int)ft_strlen((*new)->name) : a->max_length[7];
 }
 
 void		get_time(t_files **new, struct stat *file, t_all *all)

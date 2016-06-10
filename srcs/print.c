@@ -6,7 +6,7 @@
 /*   By: sgaudin <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/06/09 17:20:52 by sgaudin           #+#    #+#             */
-/*   Updated: 2016/06/10 14:26:31 by sgaudin          ###   ########.fr       */
+/*   Updated: 2016/06/10 14:28:54 by sgaudin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,6 @@ void		print_l(t_all *all, t_files **list)
 	ft_printf(tmp = set_printf(all->max_length[6], "s "), (*list)->time[2]);
 	ft_strdel(&tmp);
 	ft_printf("%s\n", (*list)->name);
-//	ft_printf(tmp = set_printf(all->max_length[7], "s\n"), (*list)->name);
 }
 
 void		print_list_bis(t_all *all)
@@ -55,20 +54,12 @@ void		print_list_bis(t_all *all)
 		{
 			if (all->flag_l)
 				print_l(all, &all->list_bis);
-//				ft_printf("%s %D %s %s %jd %s %s %s %s\n", all->list_bis->rights,
-//		all->list_bis->links, all->list_bis->own_name, all->list_bis->own_grp,
-//		all->list_bis->size, all->list_bis->time[0], all->list_bis->time[1],
-//		all->list_bis->time[2], all->list_bis->name);
 			else
 				ft_printf("%s\n", all->list_bis->name);
 			all->list_bis = all->list_bis->next;
 		}
 		if (all->flag_l)
 			print_l(all, &all->list_bis);
-//				ft_printf("%s %D %s %s %jd %s %s %s %s\n", all->list_bis->rights,
-//		all->list_bis->links, all->list_bis->own_name, all->list_bis->own_grp,
-//		all->list_bis->size, all->list_bis->time[0], all->list_bis->time[1],
-//		all->list_bis->time[2], all->list_bis->name);
 		else
 			ft_printf("%s\n", all->list_bis->name);
 		free_list(&all->list_bis);
@@ -83,10 +74,6 @@ void		verif_flag(t_all *all)
 		{
 			if (all->flag_l)
 				print_l(all, &all->list);
-/*				ft_printf("%s %D %s %s %jd %s %s %s %s\n", all->list->rights,
-		all->list->links, all->list->own_name, all->list->own_grp,
-		all->list->size, all->list->time[0], all->list->time[1],
-		all->list->time[2], all->list->name); */
 			else
 				ft_printf("%s\n", all->list->name);
 		}
@@ -95,10 +82,6 @@ void		verif_flag(t_all *all)
 	{
 		if (all->flag_l)
 			print_l(all, &all->list);
-/*			ft_printf("%s %D %s %s %jd %s %s %s %s\n", all->list->rights,
-		all->list->links, all->list->own_name, all->list->own_grp,
-		all->list->size, all->list->time[0], all->list->time[1],
-		all->list->time[2], all->list->name); */
 		else
 			ft_printf("%s\n", all->list->name);
 	}
