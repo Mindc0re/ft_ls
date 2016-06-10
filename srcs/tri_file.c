@@ -6,7 +6,7 @@
 /*   By: sgaudin <sgaudin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/06/06 13:32:01 by sgaudin           #+#    #+#             */
-/*   Updated: 2016/06/10 10:53:50 by sgaudin          ###   ########.fr       */
+/*   Updated: 2016/06/10 11:46:59 by sgaudin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,21 +27,21 @@ void		swap(t_files **list)
 	(*list)->next = tmp.next;
 }
 
-int			tri_flag(t_files **list, t_all *all)
+int			tri_flag(t_files **l, t_all *a)
 {
-	if (ft_strcmp((*list)->name, (*list)->next->name) < 0 && all->flag_r && !all->flag_t)
+	if (ft_strcmp((*l)->name, (*l)->next->name) < 0 && a->flag_r && !a->flag_t)
 	{
-		swap(&(*list));
+		swap(&(*l));
 		return (1);
 	}
-	else if (((*list)->time_sec - (*list)->next->time_sec) < 0 && all->flag_t && !all->flag_r)
+	if (((*l)->time_sec - (*l)->next->time_sec) < 0 && a->flag_t && !a->flag_r)
 	{
-		swap(&(*list));
+		swap(&(*l));
 		return (1);
 	}
-	else if (all->flag_t && all->flag_r && ((*list)->time_sec - (*list)->next->time_sec) > 0)
+	if (a->flag_t && a->flag_r && ((*l)->time_sec - (*l)->next->time_sec) > 0)
 	{
-		swap(&(*list));
+		swap(&(*l));
 		return (1);
 	}
 	return (0);

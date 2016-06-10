@@ -6,7 +6,7 @@
 /*   By: sgaudin <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/05/31 13:44:23 by sgaudin           #+#    #+#             */
-/*   Updated: 2016/06/10 11:36:59 by sgaudin          ###   ########.fr       */
+/*   Updated: 2016/06/10 11:50:32 by sgaudin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ void		get_time(t_files **new, struct stat *file)
 	char			*time_str;
 	char			**tmp_tab;
 	time_t			tm;
-	char 			*timestamp;
+	char			*timestamp;
 
 	tm = time(NULL);
 	timestamp = ctime(&tm);
@@ -51,10 +51,10 @@ void		get_infos(t_files **new, struct stat *file)
 	get_time(new, file);
 	if ((*new)->rights[0] == 'l')
 	{
-		FT_INIT(char *, linkname, (char *)malloc(sizeof(char) * file->st_size + 1));
-		readlink((*new)->path, linkname, file->st_size + 1);
-		linkname = ft_strjoin(" -> ", linkname);
-		(*new)->name = ft_strjoin((*new)->name, linkname);
+		FT_INIT(char *, link, (char *)malloc(sizeof(char) * file->st_size + 1));
+		readlink((*new)->path, link, file->st_size + 1);
+		link = ft_strjoin(" -> ", link);
+		(*new)->name = ft_strjoin((*new)->name, link);
 	}
 }
 

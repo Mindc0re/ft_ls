@@ -6,7 +6,7 @@
 /*   By: sgaudin <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/05/23 09:26:44 by sgaudin           #+#    #+#             */
-/*   Updated: 2016/06/10 11:23:04 by sgaudin          ###   ########.fr       */
+/*   Updated: 2016/06/10 11:45:01 by sgaudin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,12 @@ void		backlist(t_files **list)
 		while ((*list)->prev)
 			(*list) = (*list)->prev;
 	}
+}
+
+static void	first_arg(t_all *all, char *str, struct stat *file)
+{
+	all->args->name = ft_strdup(str);
+	get_type(&all->args, &file);
 }
 
 t_files		*init_file(void)
@@ -46,10 +52,7 @@ void		create_args(t_all *all, char *str, int next)
 
 	lstat(str, &file);
 	if (!check++)
-	{
-		all->args->name = ft_strdup(str);
-		get_type(&all->args, &file);
-	}
+		first_arg(all, str, &file);
 	else
 	{
 		new = init_file();
