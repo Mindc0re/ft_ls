@@ -6,7 +6,7 @@
 /*   By: sgaudin <sgaudin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/05/18 10:37:52 by sgaudin           #+#    #+#             */
-/*   Updated: 2016/06/10 13:47:47 by sgaudin          ###   ########.fr       */
+/*   Updated: 2016/06/10 14:45:36 by sgaudin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,7 @@ static void		first_parse(t_all *a)
 		{
 			if ((ret = lstat(a->args->name, &s)) == 0 && !(S_ISDIR(s.st_mode)))
 				create_list_spec(a->args->name, &a->list_bis, a);
-			else
+			else if (!S_ISDIR(s.st_mode))
 			{
 				ft_printf("%s: ", a->args->name);
 				perror("ft_ls");
@@ -101,6 +101,11 @@ void			parser_ls(t_all *a)
 			closedir(dir);
 			read_dir(a, a->args->name);
 			print_list_hub(a);
+		}
+		else if (a->args->type == T_DIR)
+		{
+			ft_printf("%s: ", a->args->name);
+			perror("ft_ls");
 		}
 		if (a->args->next)
 			a->args = a->args->next;
