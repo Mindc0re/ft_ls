@@ -6,7 +6,7 @@
 /*   By: sgaudin <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/05/23 09:26:44 by sgaudin           #+#    #+#             */
-/*   Updated: 2016/06/10 11:45:01 by sgaudin          ###   ########.fr       */
+/*   Updated: 2016/06/10 13:48:23 by sgaudin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ void		backlist(t_files **list)
 static void	first_arg(t_all *all, char *str, struct stat *file)
 {
 	all->args->name = ft_strdup(str);
-	get_type(&all->args, &file);
+	get_type(&all->args, file, all);
 }
 
 t_files		*init_file(void)
@@ -34,10 +34,10 @@ t_files		*init_file(void)
 	files = (t_files *)malloc(sizeof(t_files));
 	files->type = -1;
 	files->links = 0;
+	files->path = NULL;
 	files->own_name = NULL;
 	files->own_grp = NULL;
 	files->size = -1;
-	files->lastmodtime = NULL;
 	files->name = NULL;
 	files->prev = NULL;
 	files->next = NULL;
@@ -58,7 +58,7 @@ void		create_args(t_all *all, char *str, int next)
 		new = init_file();
 		new->name = ft_strdup(str);
 		new->prev = all->args;
-		get_type(&new, &file);
+		get_type(&new, &file, all);
 		if (!next)
 		{
 			new->next = all->args->next;
@@ -84,7 +84,7 @@ void		create_list(char *str, t_files **list, t_all *all)
 		(*list)->path = ft_strjoin(all->args->name, "/");
 		(*list)->path = ft_strjoin((*list)->path, str);
 		lstat((*list)->path, &file);
-		get_type(&(*list), &file);
+		get_type(&(*list), &file, all);
 	}
 	else
 	{
@@ -93,7 +93,7 @@ void		create_list(char *str, t_files **list, t_all *all)
 		new->path = ft_strjoin(all->args->name, "/");
 		new->path = ft_strjoin(new->path, str);
 		lstat(new->path, &file);
-		get_type(&new, &file);
+		get_type(&new, &file, all);
 		new->prev = (*list);
 		(*list)->next = new;
 		(*list) = (*list)->next;

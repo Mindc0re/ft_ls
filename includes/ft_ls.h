@@ -6,7 +6,7 @@
 /*   By: sgaudin <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/05/17 11:09:05 by sgaudin           #+#    #+#             */
-/*   Updated: 2016/06/10 10:57:36 by sgaudin          ###   ########.fr       */
+/*   Updated: 2016/06/10 13:46:39 by sgaudin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,6 +37,8 @@
 #  define FT_MULTI3(a, b, c)		a = b = c
 # endif
 
+# define SIX_MONTHS 15778800
+
 typedef struct		s_files
 {
 	int				type;
@@ -47,7 +49,7 @@ typedef struct		s_files
 	char			rights[11];
 	char			*own_name;
 	char			*own_grp;
-	char			*lastmodtime;
+	char			*time[4];
 	char			*name;
 	char			*path;
 	struct s_files	*next;
@@ -70,7 +72,7 @@ typedef struct		s_all
 	int				flag_a;
 	int				flag_l;
 	int				flag_f;
-	int				max_length;
+	int				max_length[8];
 	int				total;
 	t_files			*args;
 	t_files			*list;
@@ -110,7 +112,7 @@ void				print_list_hub(t_all *all);
 void				print_list_bis(t_all *all);
 void				print_list_reg(t_all *all);
 
-void				get_type(t_files **files, struct stat *file);
+void				get_type(t_files **files, struct stat *file, t_all *all);
 
 void				free_args(t_all *all);
 void				free_list(t_files **list);

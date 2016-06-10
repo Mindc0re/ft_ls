@@ -6,13 +6,13 @@
 /*   By: sgaudin <sgaudin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/05/18 10:37:52 by sgaudin           #+#    #+#             */
-/*   Updated: 2016/06/10 11:47:39 by sgaudin          ###   ########.fr       */
+/*   Updated: 2016/06/10 13:47:47 by sgaudin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/ft_ls.h"
 
-static void		create_list_spec(char *str, t_files **list)
+static void		create_list_spec(char *str, t_files **list, t_all *all)
 {
 	t_files		*new;
 	struct stat	file;
@@ -22,14 +22,14 @@ static void		create_list_spec(char *str, t_files **list)
 		(*list) = init_file();
 		(*list)->name = str;
 		lstat((*list)->name, &file);
-		get_type(&(*list), &file);
+		get_type(&(*list), &file, all);
 	}
 	else
 	{
 		new = init_file();
 		new->name = str;
 		lstat(new->name, &file);
-		get_type(&new, &file);
+		get_type(&new, &file, all);
 		new->prev = (*list);
 		(*list)->next = new;
 		(*list) = (*list)->next;
@@ -48,7 +48,7 @@ static void		first_parse(t_all *a)
 		if (!(dir = opendir(a->args->name)))
 		{
 			if ((ret = lstat(a->args->name, &s)) == 0 && !(S_ISDIR(s.st_mode)))
-				create_list_spec(a->args->name, &a->list_bis);
+				create_list_spec(a->args->name, &a->list_bis, a);
 			else
 			{
 				ft_printf("%s: ", a->args->name);

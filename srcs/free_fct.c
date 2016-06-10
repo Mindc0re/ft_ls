@@ -6,7 +6,7 @@
 /*   By: sgaudin <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/05/23 09:51:36 by sgaudin           #+#    #+#             */
-/*   Updated: 2016/06/10 10:51:46 by sgaudin          ###   ########.fr       */
+/*   Updated: 2016/06/10 13:24:48 by sgaudin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,8 +39,12 @@ void		free_list(t_files **list)
 			tmp_lst = (*list)->next;
 			if ((*list)->path)
 				free((*list)->path);
-			if ((*list)->lastmodtime)
-				free((*list)->lastmodtime);
+			if ((*list)->time[0])
+			{
+				free((*list)->time[0]);
+				free((*list)->time[1]);
+				free((*list)->time[2]);
+			}
 			if ((*list)->own_grp)
 				free((*list)->own_grp);
 			if ((*list)->own_name)

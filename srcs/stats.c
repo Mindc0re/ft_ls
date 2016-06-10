@@ -6,33 +6,54 @@
 /*   By: sgaudin <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/05/31 13:44:23 by sgaudin           #+#    #+#             */
-/*   Updated: 2016/06/10 11:50:32 by sgaudin          ###   ########.fr       */
+/*   Updated: 2016/06/10 13:53:08 by sgaudin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/ft_ls.h"
 
-void		get_time(t_files **new, struct stat *file)
+void		get_max_lengths(t_files **new, t_all *all)
+{
+	all->max_length[0] = (int)ft_strlen(ft_itoa((*new)->links)) > all->max_length[0]
+		? (int)ft_strlen(ft_itoa((*new)->links)) : all->max_length[0];
+	all->max_length[1] = (int)ft_strlen((*new)->own_name) > all->max_length[1] ?
+		(int)ft_strlen((*new)->own_name) : all->max_length[1];
+	all->max_length[2] = (int)ft_strlen((*new)->own_grp) > all->max_length[1] ?
+		(int)ft_strlen((*new)->own_grp) : all->max_length[2];
+	all->max_length[3] = (int)ft_strlen(ft_itoa((*new)->size)) > all->max_length[3]
+		? (int)ft_strlen(ft_itoa((*new)->size)) : all->max_length[3];
+	all->max_length[4] = (int)ft_strlen((*new)->time[0]) > all->max_length[4] ?
+		(int)ft_strlen((*new)->time[0]) : all->max_length[4];
+	all->max_length[5] = (int)ft_strlen((*new)->time[1]) > all->max_length[5] ?
+		(int)ft_strlen((*new)->time[1]) : all->max_length[5];
+	all->max_length[6] = (int)ft_strlen((*new)->time[2]) > all->max_length[6] ?
+		(int)ft_strlen((*new)->time[2]) : all->max_length[6];
+	all->max_length[7] = (int)ft_strlen((*new)->name) > all->max_length[7] ?
+		(int)ft_strlen((*new)->name) : all->max_length[7];
+}
+
+void		get_time(t_files **new, struct stat *file, t_all *all)
 {
 	char			*time_str;
 	char			**tmp_tab;
-	time_t			tm;
-	char			*timestamp;
+	long int		timestamp;
 
-	tm = time(NULL);
-	timestamp = ctime(&tm);
-	time_str = ctime(&file->st_mtime);
+	timestamp = file->st_mtimespec.tv_sec - time(NULL);
+	timestamp = timestamp < 0 ? -timestamp : timestamp;
+	time_str = ft_strdup(ctime(&file->st_mtime));
 	tmp_tab = ft_strsplit(time_str, ' ');
 	time_str = ft_strsub(tmp_tab[3], 0,
 	ft_strlen(tmp_tab[3]) - ft_strlen(ft_strrchr(tmp_tab[3], ':')));
 	(*new)->time_sec = file->st_mtimespec.tv_sec;
-	(*new)->lastmodtime = ft_strjoin(tmp_tab[1], " ");
-	(*new)->lastmodtime = ft_strjoin((*new)->lastmodtime, tmp_tab[2]);
-	(*new)->lastmodtime = ft_strjoin((*new)->lastmodtime, " ");
-	(*new)->lastmodtime = ft_strjoin((*new)->lastmodtime, time_str);
+	(*new)->time[0] = ft_strdup(tmp_tab[1]);
+	(*new)->time[1] = ft_strdup(tmp_tab[2]);
+	(*new)->time[2] = timestamp > SIX_MONTHS ?
+	ft_strsub(tmp_tab[4], 0, ft_strlen(tmp_tab[4]) - 1) : time_str;
+	(*new)->time[3] = NULL;
+	get_max_lengths(new, all);
 }
 
-void		get_infos(t_files **new, struct stat *file)
+void		get_infos(t_files **new, struct stat *file, t_all *all)
 {
 	struct passwd	*pwd;
 	struct group	*grp;
@@ -48,7 +69,7 @@ void		get_infos(t_files **new, struct stat *file)
 		ft_strcpy((*new)->own_grp, grp->gr_name);
 	(*new)->size = (intmax_t)file->st_size;
 	(*new)->nb_blocks = file->st_blocks;
-	get_time(new, file);
+	get_time(new, file, all);
 	if ((*new)->rights[0] == 'l')
 	{
 		FT_INIT(char *, link, (char *)malloc(sizeof(char) * file->st_size + 1));
@@ -58,7 +79,7 @@ void		get_infos(t_files **new, struct stat *file)
 	}
 }
 
-void		get_rights(t_files **new, struct stat *file)
+void		get_rights(t_files **new, struct stat *file, t_all *all)
 {
 	(*new)->rights[0] = '-';
 	(*new)->rights[0] = (S_ISREG(file->st_mode)) ? '-' : (*new)->rights[0];
@@ -80,10 +101,10 @@ void		get_rights(t_files **new, struct stat *file)
 	FT_TER(file->st_mode & S_ISVTX, 't', 'x') :
 	FT_TER(file->st_mode & S_ISVTX, 'T', '-');
 	(*new)->rights[10] = '\0';
-	get_infos(new, file);
+	get_infos(new, file, all);
 }
 
-void		get_type(t_files **new, struct stat *file)
+void		get_type(t_files **new, struct stat *file, t_all *all)
 {
 	if (S_ISREG(file->st_mode))
 		(*new)->type = T_REG;
@@ -101,5 +122,5 @@ void		get_type(t_files **new, struct stat *file)
 		(*new)->type = T_SOCK;
 	else
 		(*new)->type = T_REG;
-	get_rights(new, file);
+	get_rights(new, file, all);
 }

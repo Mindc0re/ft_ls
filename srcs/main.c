@@ -6,7 +6,7 @@
 /*   By: sgaudin <sgaudin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/05/18 10:39:46 by sgaudin           #+#    #+#             */
-/*   Updated: 2016/06/10 10:52:48 by sgaudin          ###   ########.fr       */
+/*   Updated: 2016/06/10 13:56:41 by sgaudin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,16 +14,21 @@
 
 static void	init_all(t_all *all)
 {
+	FT_INIT(int, i, 0);
 	all->flag_r_big = 0;
 	all->flag_r = 0;
 	all->flag_a = 0;
 	all->flag_t = 0;
 	all->flag_l = 0;
 	all->flag_f = 0;
-	all->max_length = 0;
 	all->args = init_file();
 	all->list = NULL;
 	all->list_bis = NULL;
+	while (i < 8)
+	{
+		all->max_length[i] = 0;
+		i++;
+	}
 }
 
 int			main(int ac, char **av)
